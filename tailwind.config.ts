@@ -19,15 +19,18 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        synthwave: {
-          ...require("daisyui/src/theming/themes")["synthwave"],
-          primary: "#3d50d0",
-          secondary: "#8032ba",
+        CustomTheme: {
+          primary: "#000066",
+          secondary: "#f17b24",
+          accent: "#000000",
         },
       },
       {
-        winter: {
-          ...require("daisyui/src/theming/themes")["winter"],
+        dark: {
+          ...require("daisyui/src/theming/themes")["dark"],
+          primary: "#000066",
+          secondary: "#f17b24",
+          accent: "#ffffff",
         },
       },
     ],

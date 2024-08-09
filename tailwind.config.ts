@@ -15,6 +15,22 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        synthwave: {
+          ...require("daisyui/src/theming/themes")["synthwave"],
+          primary: "#3d50d0",
+          secondary: "#8032ba",
+        },
+      },
+      {
+        winter: {
+          ...require("daisyui/src/theming/themes")["winter"],
+        },
+      },
+    ],
+  },
 };
 export default config;

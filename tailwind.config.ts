@@ -20,17 +20,17 @@ const config: Config = {
     themes: [
       {
         CustomTheme: {
-          primary: "#000066",
-          secondary: "#f17b24",
-          accent: "#000000",
+          primary: "#4c00b0",
+          secondary: "#d90077",
+          accent: "#7600bc",
         },
       },
       {
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
-          primary: "#000066",
-          secondary: "#f17b24",
-          accent: "#ffffff",
+          primary: "#4c00b0",
+          secondary: "#d90077",
+          accent: "#7600bc",
         },
       },
       "light",

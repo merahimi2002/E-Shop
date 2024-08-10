@@ -1,4 +1,4 @@
-import Logo from "@/public/image/Logo.png";
+import Logo from "@/public/image/LogoWhite.png";
 import Image from "next/image";
 import Link from "next/link";
 import NavBarLinks from "./NavBarLinks";
@@ -33,7 +33,7 @@ const NavBar = () => {
           </ul>
         </div>
         <Link href="/">
-          <Image width={100} height={100} src={Logo} alt="Logo" priority/>
+          <Image width={130} height={130} src={Logo} alt="Logo" priority/>
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

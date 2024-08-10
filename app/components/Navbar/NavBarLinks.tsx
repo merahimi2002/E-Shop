@@ -7,16 +7,16 @@ const NavBarLinks = () => {
   console.log(currentPath);
   return (
     <>
-      <li className={currentPath === "/" ? "text-white" : "text-gray"}>
+      <li className={currentPath === "/" ? "text-secondary" : "text-white"}>
         <Link href="/">Home</Link>
       </li>
-      <li className={currentPath === "/about" ? "text-white" : "text-gray"}>
+      <li className={currentPath === "/about" ? "text-secondary" : "text-white"}>
         <Link href="/">About</Link>
       </li>
-      <li className={currentPath === "/contact" ? "text-white" : "text-gray"}>
+      <li className={currentPath === "/contact" ? "text-secondary" : "text-white"}>
         <Link href="/">Contact</Link>
       </li>
-      <li className={currentPath === "/product" ? "text-white" : "text-gray"}>
+      <li className={currentPath === "/product" ? "text-secondary" : "text-white"}>
         <details>
           <summary>
             <Link href="/">Product</Link>

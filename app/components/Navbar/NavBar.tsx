@@ -1,4 +1,4 @@
-import Logo from "@/public/image/LogoWhite.png";
+import Logo from "@/public/image/LogoPink.png";
 import Image from "next/image";
 import Link from "next/link";
 import NavBarLinks from "./NavBarLinks";

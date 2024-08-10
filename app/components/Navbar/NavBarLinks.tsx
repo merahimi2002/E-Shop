@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 
 const NavBarLinks = () => {
   const currentPath = usePathname();
-  console.log(currentPath);
   return (
     <>
       <li className={currentPath === "/" ? "text-secondary" : "text-white"}>
@@ -22,10 +21,10 @@ const NavBarLinks = () => {
             <Link href="/">Product</Link>
           </summary>
           <ul className="p-2">
-            <li>
+            <li className="text-gray-500">
               <Link href="/">Product_1</Link>
             </li>
-            <li>
+            <li className="text-gray-500">
               <Link href="/">Product_2</Link>
             </li>
           </ul>

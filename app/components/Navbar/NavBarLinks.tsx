@@ -21,10 +21,10 @@ const NavBarLinks = () => {
             <Link href="/">Product</Link>
           </summary>
           <ul className="p-2">
-            <li className="text-gray-500">
+            <li className="text-neutral">
               <Link href="/">Product_1</Link>
             </li>
-            <li className="text-gray-500">
+            <li className="text-neutral">
               <Link href="/">Product_2</Link>
             </li>
           </ul>

@@ -32,6 +32,8 @@ const config: Config = {
           primary: "#4c00b0",
           secondary: "#d90077",
           accent: "#7600bc",
+          neutral: "#000000",
+          "base-100": "#ffffff",
         },
       },
       {
@@ -40,6 +42,8 @@ const config: Config = {
           primary: "#4c00b0",
           secondary: "#d90077",
           accent: "#7600bc",
+          neutral: "#ffffff",
+          "base-100": "#000000",
         },
       },
       "light",

@@ -57,11 +57,11 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
       {/* nav */}
       <IoIosArrowForward
         onClick={handleNextSlide}
-        className="absolute right-5 m-auto text-3xl inset-y-1/2 cursor-pointer text-gray-400 z-20"
+        className="absolute right-5 m-auto text-3xl inset-y-1/2 cursor-pointer text-secondary z-20"
       />
       <IoIosArrowBack
         onClick={handlePrevSlide}
-        className="absolute left-5 m-auto text-3xl inset-y-1/2 cursor-pointer text-gray-400 z-20"
+        className="absolute left-5 m-auto text-3xl inset-y-1/2 cursor-pointer text-secondary z-20"
       />
       {/* dots */}
       <div className="relative flex justify-center p-2">
@@ -70,8 +70,8 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
             <div
               className={
                 index === currentSlide
-                  ? "h-4 w-4 bg-gray-700 rounded-full mx-2 mb-2 cursor-pointer"
-                  : "h-4 w-4 bg-gray-300 rounded-full mx-2 mb-2 cursor-pointer"
+                  ? "h-4 w-4 bg-secondary rounded-full mx-2 mb-2 cursor-pointer"
+                  : "h-4 w-4 bg-white rounded-full mx-2 mb-2 cursor-pointer"
               }
               key={index}
               onClick={() => {

@@ -1,7 +1,10 @@
+import CarouselSlider from "./components/CarouselSlider";
+import Slider from "@/public/image/Slider01.png";
+
 export default function Home() {
   return (
-    <h1>Hi</h1>
+    <>
+      <CarouselSlider images={[Slider, Slider, Slider]} />
+    </>
   );
 }
-
-

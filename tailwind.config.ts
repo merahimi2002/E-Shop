@@ -23,6 +23,9 @@ const config: Config = {
         },
       },
     },
+    container: {
+      center: true,
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {

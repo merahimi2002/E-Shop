@@ -12,3 +12,8 @@
   font-size: 18px;
   font-weight: 500;
 }
+
+.CodeMirror{
+  background-color: var(--tw-base-100) !important;
+  color:var(--tw-neutral) !important;
+}

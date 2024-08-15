@@ -5,7 +5,7 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Swipe from "react-easy-swipe";
 
 interface CarouselSliderProps {
-  images: StaticImageData[];
+  images: string[];
 }
 
 const CarouselSlider = ({ images }: CarouselSliderProps) => {

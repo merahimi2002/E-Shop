@@ -1,11 +1,6 @@
-import { NextResponse } from "next/server";
-import { z } from "zod";
 import prisma from "@/prisma/client";
-
-const createCategorySchema = z.object({
-  title: z.string().min(1).max(50),
-  imageUrl: z.string().min(1).max(255),
-});
+import { NextResponse } from "next/server";
+import { createCategorySchema } from "../validation/validationSchema";
 
 export async function POST(request: NextResponse) {
   const body = await request.json();

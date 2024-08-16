@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .custom-form-input {
+    @apply w-full md:w-1/3 input input-bordered border-primary flex items-center gap-2;
+  }
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .menu li a {
+    font-size: 18px;
+    font-weight: 500;
+  }
 }
 
-.menu li a {
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.CodeMirror{
+.CodeMirror {
   background-color: var(--tw-base-100) !important;
-  color:var(--tw-neutral) !important;
+  color: var(--tw-neutral) !important;
 }

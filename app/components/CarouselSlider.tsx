@@ -1,7 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/image";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Image from "next/image";
 import Swipe from "react-easy-swipe";
 
 interface CarouselSliderProps {
@@ -45,8 +46,9 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
                   key={index}
                   src={image}
                   alt="pic"
-                  layout="fill"
-                  objectFit="contain"
+                  fill
+                  style={{objectFit:"contain"}}
+                  priority
                   className="animate-[FadeIn_2s]"
                 />
               );

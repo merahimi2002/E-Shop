@@ -12,14 +12,14 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 
-type AddCategoryProps = z.infer<typeof createCategorySchema>;
+type InsertCategoryProps = z.infer<typeof createCategorySchema>;
 
-const AddCategory = () => {
+const InsertCategory = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddCategoryProps>({
+  } = useForm<InsertCategoryProps>({
     resolver: zodResolver(createCategorySchema),
   });
   const router = useRouter();
@@ -57,7 +57,7 @@ const AddCategory = () => {
             disabled={isSubmiting}
             className="btn btn-secondary w-fit mt-5"
           >
-            Add New Product
+            Add New Category
             {isSubmiting && (
               <span className="loading loading-spinner loading-md"></span>
             )}
@@ -68,4 +68,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default InsertCategory;

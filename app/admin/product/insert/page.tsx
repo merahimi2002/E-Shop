@@ -14,15 +14,15 @@ import axios from "axios";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 
-type AddProductPageProps = z.infer<typeof createProductSchema>;
+type InsertProductProps = z.infer<typeof createProductSchema>;
 
-const AddProductPage = () => {
+const InsertProduct = () => {
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddProductPageProps>({
+  } = useForm<InsertProductProps>({
     resolver: zodResolver(createProductSchema),
   });
   const router = useRouter();
@@ -99,4 +99,4 @@ const AddProductPage = () => {
   );
 };
 
-export default AddProductPage;
+export default InsertProduct;

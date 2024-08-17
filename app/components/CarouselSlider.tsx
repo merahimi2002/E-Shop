@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoMdArrowRoundForward } from "react-icons/io";
 import Image from "next/image";
 import Swipe from "react-easy-swipe";
 
@@ -33,27 +34,49 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
 
   return (
     <div className="relative py-5">
-      <div className="w-full h-[50vh] flex overflow-hidden relative m-auto">
+      <div className="w-full h-[25vh] md:h-[67.5vh] flex overflow-hidden relative m-auto">
         <Swipe
           onSwipeLeft={handleNextSlide}
           onSwipeRight={handlePrevSlide}
           className="relative z-10 w-full h-full"
         >
-          {images.map((image, index) => {
-            if (index === currentSlide) {
-              return (
-                <Image
-                  key={index}
-                  src={image}
-                  alt="pic"
-                  fill
-                  style={{objectFit:"contain"}}
-                  priority
-                  className="animate-[FadeIn_2s]"
-                />
-              );
-            }
-          })}
+          <div>
+            {images.map((image, index) => {
+              if (index === currentSlide) {
+                return (
+                  <Image
+                    key={index}
+                    src={image}
+                    alt="pic"
+                    fill
+                    style={{ objectFit: "contain" }}
+                    priority
+                    className="animate-[FadeIn_2s] z-10"
+                  />
+                );
+              }
+            })}
+            {images.map((image, index) => {
+              if (index === currentSlide) {
+                return (
+                  <div key={index} className="hidden md:block relative py-20 px-28 animate-[FadeIn_2s] z-50">
+                    <h1 className="text-5xl font-semibold text-primary">
+                      <span className="text-secondary">Electro </span>
+                      Shop
+                    </h1>
+                    <p className="text-xl text-neutral my-10">
+                      we're more than just a computer equipment store <br></br>{" "}
+                      we're your technology partners
+                    </p>
+                    <button className="read-more">
+                      Read More{" "}
+                      <IoMdArrowRoundForward className="mt-1" size="23" />
+                    </button>
+                  </div>
+                );
+              }
+            })}
+          </div>
         </Swipe>
       </div>
       {/* nav */}

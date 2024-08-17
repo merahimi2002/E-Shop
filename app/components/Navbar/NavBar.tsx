@@ -7,7 +7,7 @@ import ThemeController from "./ThemeController";
 
 const NavBar = () => {
   return (
-    <div className="navbar bg-primary px-5 lg:px-10 ">
+    <div className="navbar bg-primary px-5 py-0 lg:px-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

@@ -12,7 +12,7 @@ interface CarouselSliderProps {
 
 const CarouselSlider = ({ images }: CarouselSliderProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const DelayTime = 5000;
+  const DelayTime = 50000;
 
   const handleNextSlide = () => {
     let newSlide = currentSlide === images.length - 1 ? 0 : currentSlide + 1;
@@ -40,7 +40,7 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
           onSwipeRight={handlePrevSlide}
           className="relative z-10 w-full h-full"
         >
-          <div>
+          <div className="w-full h-full">
             {images.map((image, index) => {
               if (index === currentSlide) {
                 return (
@@ -59,12 +59,12 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
             {images.map((image, index) => {
               if (index === currentSlide) {
                 return (
-                  <div key={index} className="hidden md:block relative py-20 px-28 animate-[FadeIn_2s] z-50">
-                    <h1 className="text-5xl font-semibold text-primary">
+                  <div key={index} className="hidden md:flex flex-col flex-center relative w-1/2 h-full  animate-[FadeIn_2s] z-50">
+                    <h1 className="text-5xl font-semibold text-primary text-right">
                       <span className="text-secondary">Electro </span>
                       Shop
                     </h1>
-                    <p className="text-xl text-neutral my-10">
+                    <p className="text-xl text-neutral text-center my-10">
                       we're more than just a computer equipment store <br></br>{" "}
                       we're your technology partners
                     </p>

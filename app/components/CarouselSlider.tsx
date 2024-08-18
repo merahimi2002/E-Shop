@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { IoMdArrowRoundForward } from "react-icons/io";
+import Link from "next/link";
 import Image from "next/image";
 import Swipe from "react-easy-swipe";
 
@@ -59,7 +60,10 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
             {images.map((image, index) => {
               if (index === currentSlide) {
                 return (
-                  <div key={index} className="hidden md:flex flex-col flex-center relative w-1/2 h-full  animate-[FadeIn_2s] z-50">
+                  <div
+                    key={index}
+                    className="hidden md:flex flex-col flex-center relative w-1/2 h-full  animate-[FadeIn_2s] z-50"
+                  >
                     <h1 className="text-5xl font-semibold text-primary text-right">
                       <span className="text-secondary">Electro </span>
                       Shop
@@ -68,10 +72,10 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
                       we're more than just a computer equipment store <br></br>{" "}
                       we're your technology partners
                     </p>
-                    <button className="read-more">
+                    <Link href="/about" className="read-more">
                       Read More{" "}
                       <IoMdArrowRoundForward className="mt-1" size="23" />
-                    </button>
+                    </Link>
                   </div>
                 );
               }

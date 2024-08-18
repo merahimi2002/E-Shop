@@ -13,7 +13,7 @@ const NavBarLinks = () => {
       <li
         className={currentPath === "/about" ? "text-secondary" : "text-white"}
       >
-        <Link href="/">About</Link>
+        <Link href="/about">About</Link>
       </li>
       <li
         className={currentPath === "/contact" ? "text-secondary" : "text-white"}

@@ -8,11 +8,27 @@
   }
 
   .read-more {
-    @apply flex align-middle justify-center gap-1 text-xl bg-secondary text-white px-6 py-3 rounded-3xl hover:bg-gradient-to-br from-secondary to-primary duration-300 w-fit
+    @apply flex align-middle justify-center gap-1 text-xl bg-secondary text-white px-6 py-3 rounded-3xl hover:bg-gradient-to-br from-secondary to-primary duration-300 w-fit;
   }
 
   .flex-center{
-    @apply justify-center items-center
+    @apply justify-center items-center;
+  }
+
+  .c-row {
+    @apply flex flex-col md:flex-row gap-4;
+  }
+
+  .Titr{
+    @apply text-3xl font-semibold text-secondary m-4 w-fit border-b-4 rounded-full border-primary pb-3 px-4;
+  }
+  
+  .image-border{
+    @apply relative mx-5 before:-z-10 before:border-8 before:border-primary  before:-translate-x-5 before:translate-y-5 before:absolute before:left-0 before:top-0 before:h-full before:w-full before:rounded-lg;
+  }
+
+  .image-border-img{
+    @apply hover:-translate-x-5 hover:translate-y-5 duration-500 rounded-lg;
   }
 }
 
@@ -25,7 +41,6 @@
     font-size: 18px;
     font-weight: 500;
   }
-
 }
 
 .CodeMirror {

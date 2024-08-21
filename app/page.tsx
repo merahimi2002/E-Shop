@@ -12,9 +12,7 @@ export default function Home() {
       <div className="bg-gradient-to-b from-base-100 to-primary pt-10">
         <CarouselSlider images={Sliders} />
       </div>
-      <div className="my-20 md:mx-10">
-        <About />
-      </div>
+      <About />
     </>
   );
 }

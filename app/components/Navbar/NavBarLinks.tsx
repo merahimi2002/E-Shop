@@ -31,7 +31,7 @@ const NavBarLinks = () => {
       >
         <details>
           <summary>
-            <Link href="/">Product</Link>
+            <Link href="/product">Product</Link>
           </summary>
           <ul className="p-2">
             <li className="text-neutral">

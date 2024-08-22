@@ -34,9 +34,11 @@ const config: Config = {
         CustomTheme: {
           primary: "#4c00b0",
           secondary: "#d90077",
-          accent: "#7600bc",
-          neutral: "#000000",
-          "base-100": "#ffffff",
+          accent: "#00bfa5",
+          neutral: "#ffcc00",
+          "base-100": "#f4f4f4",
+          "base-200" : "#000000",
+          "info-content" : "#2e2e3a"
         },
       },
       {
@@ -44,9 +46,11 @@ const config: Config = {
           ...require("daisyui/src/theming/themes")["dark"],
           primary: "#4c00b0",
           secondary: "#d90077",
-          accent: "#7600bc",
-          neutral: "#ffffff",
+          accent: "#00bfa5",
+          neutral: "#ffcc00",
           "base-100": "#000000",
+          "base-200" : "#f4f4f4",
+          "info-content" : "#2e2e3a"
         },
       },
       "light",

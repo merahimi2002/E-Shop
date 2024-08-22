@@ -62,7 +62,7 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
                 return (
                   <div
                     key={index}
-                    className="hidden md:flex flex-col flex-center relative w-1/2 h-full  animate-[FadeIn_2s] z-50"
+                    className="hidden md:flex flex-col flex-center relative w-1/2 h-full  animate-[FadeIn_2s] z-40"
                   >
                     <h1 className="text-5xl font-semibold text-primary text-right">
                       <span className="text-secondary">Electro </span>

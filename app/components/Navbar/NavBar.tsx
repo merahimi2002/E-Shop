@@ -17,17 +17,17 @@ const NavBar = () => {
                 role="button"
                 className="btn btn-ghost lg:hidden"
               >
-                <RiMenu2Fill size={30} />
+                <RiMenu2Fill size={30} className="text-white" />
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-50"
               >
                 <NavBarLinks />
               </ul>
             </div>
             <Link href="/">
-              <Image src={Logo} alt="Logo" priority style={{ width: "44%" }} />
+              <Image src={Logo} alt="Logo" priority style={{ width: "100%" }} />
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">

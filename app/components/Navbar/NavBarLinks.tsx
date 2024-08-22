@@ -7,21 +7,27 @@ const NavBarLinks = () => {
   const currentPath = usePathname();
   return (
     <>
-      <li className={currentPath === "/" ? "text-secondary" : "text-white"}>
+      <li className={currentPath === "/" ? "text-secondary" : "lg:text-white"}>
         <Link href="/">Home</Link>
       </li>
       <li
-        className={currentPath === "/about" ? "text-secondary" : "text-white"}
+        className={
+          currentPath === "/about" ? "text-secondary" : "lg:text-white"
+        }
       >
         <Link href="/about">About</Link>
       </li>
       <li
-        className={currentPath === "/contact" ? "text-secondary" : "text-white"}
+        className={
+          currentPath === "/contact" ? "text-secondary" : "lg:text-white"
+        }
       >
         <Link href="/">Contact</Link>
       </li>
       <li
-        className={currentPath === "/product" ? "text-secondary" : "text-white"}
+        className={
+          currentPath === "/product" ? "text-secondary" : "lg:text-white"
+        }
       >
         <details>
           <summary>

@@ -39,38 +39,38 @@ export const About = () => {
             {currentPath === "/about" ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-0 2xl:mt-10">
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">What We Offer</p>
                 </div>
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">Our Commitment</p>
                 </div>
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">Our Vision</p>
                 </div>
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">Why Choose Us?</p>
                 </div>
               </div>
             ) : (
               <div className="hidden 2xl:grid grid-cols-2 gap-4 mt-0">
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">What We Offer</p>
                 </div>
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">Our Commitment</p>
                 </div>
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">Our Vision</p>
                 </div>
                 <div className="flex items-center">
-                  <FaCheckCircle className="text-secondary" />
+                  <FaCheckCircle className="text-accent" />
                   <p className="pl-2">Why Choose Us?</p>
                 </div>
               </div>

@@ -30,14 +30,14 @@ const NavBarLinks = () => {
         }
       >
         <details>
-          <summary>
+          <summary className="active:bg-transparent !important">
             <Link href="/product">Product</Link>
           </summary>
-          <ul className="p-2">
-            <li className="text-neutral">
+          <ul className="p-2 z-50">
+            <li className="text-base-200">
               <Link href="/">Product_1</Link>
             </li>
-            <li className="text-neutral">
+            <li className="text-base-200">
               <Link href="/">Product_2</Link>
             </li>
           </ul>

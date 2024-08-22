@@ -6,6 +6,7 @@ import { createCategorySchema } from "@/app/api/validation/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { FaRegImage } from "react-icons/fa6";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import ErrorMessage from "@/app/components/ErrorMessage";
@@ -14,10 +15,16 @@ import "easymde/dist/easymde.min.css";
 
 type InsertCategoryProps = z.infer<typeof createCategorySchema>;
 
+interface CloudinaryResult {
+  public_id: string;
+  url: string;
+}
+
 const InsertCategory = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<InsertCategoryProps>({
     resolver: zodResolver(createCategorySchema),
@@ -35,6 +42,7 @@ const InsertCategory = () => {
       setError("an unexpected error occurred");
     }
   });
+  const [publicId, setPublicId] = useState("");
   return (
     <div className="container my-4">
       <ErrorMessage>{error}</ErrorMessage>
@@ -47,11 +55,33 @@ const InsertCategory = () => {
           </label>
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
           {/* imageUrl */}
-          <label className="custom-form-input">
-            <FaRegImage />
-            <input type="text" placeholder="Image" {...register("imageUrl")} />
-          </label>
-          <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
+          <CldUploadWidget
+            uploadPreset="DBimage"
+            options={{
+              sources: ["local"],
+              multiple: false,
+              maxFiles: 2,
+              maxFileSize: 1000000,
+            }}
+            onSuccess={(result) => {
+              const info = result.info as CloudinaryResult;
+              setPublicId(info.public_id);
+              setValue("imageUrl", info.url);
+            }}
+          >
+            {({ open }) => (
+              <label className="custom-form-input w-fit">
+                <FaRegImage />
+                <input placeholder="Upload Image" onClick={() => open()} />
+              </label>
+            )}
+          </CldUploadWidget>
+          {publicId && (
+            <CldImage src={publicId} alt="pic" width={170} height={10} />
+          )}
+          {publicId == "" && (
+            <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
+          )}
           {/* button */}
           <button
             disabled={isSubmiting}

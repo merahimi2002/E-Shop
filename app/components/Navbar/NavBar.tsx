@@ -27,7 +27,7 @@ const NavBar = () => {
               </ul>
             </div>
             <Link href="/">
-              <Image src={Logo} alt="Logo" priority style={{ width: "100%" }} />
+              <Image src={Logo} alt="Logo" priority style={{ width: "50%" }} />
             </Link>
           </div>
           <div className="navbar-center hidden lg:flex">

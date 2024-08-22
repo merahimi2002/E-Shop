@@ -29,7 +29,7 @@
   }
 
   .custom-form-input {
-    @apply w-full md:w-1/3 input input-bordered border-primary flex items-center gap-2;
+    @apply w-full md:w-1/3 input input-bordered border-primary flex items-center gap-2 hover:input-bordered hover:border-primary;
   }
 
 }

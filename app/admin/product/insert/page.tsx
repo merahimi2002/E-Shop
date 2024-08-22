@@ -6,6 +6,7 @@ import { createProductSchema } from "@/app/api/validation/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { FaRegImage } from "react-icons/fa6";
 import { MdDriveFileRenameOutline } from "react-icons/md";
 import { PiCoinsThin } from "react-icons/pi";
@@ -16,10 +17,16 @@ import "easymde/dist/easymde.min.css";
 
 type InsertProductProps = z.infer<typeof createProductSchema>;
 
+interface CloudinaryResult {
+  public_id: string;
+  url: string;
+}
+
 const InsertProduct = () => {
   const {
     register,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<InsertProductProps>({
@@ -38,6 +45,7 @@ const InsertProduct = () => {
       setError("an unexpected error occurred");
     }
   });
+  const [publicId, setPublicId] = useState("");
   return (
     <div className="container my-4">
       <ErrorMessage>{error}</ErrorMessage>
@@ -63,11 +71,33 @@ const InsertProduct = () => {
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
           {/* imageUrl */}
-          <label className="custom-form-input">
-            <FaRegImage />
-            <input type="text" placeholder="Image" {...register("imageUrl")} />
-          </label>
-          <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
+          <CldUploadWidget
+            uploadPreset="DBimage"
+            options={{
+              sources: ["local"],
+              multiple: false,
+              maxFiles: 2,
+              maxFileSize: 1000000,
+            }}
+            onSuccess={(result) => {
+              const info = result.info as CloudinaryResult;
+              setPublicId(info.public_id);
+              setValue("imageUrl", info.url);
+            }}
+          >
+            {({ open }) => (
+              <label className="custom-form-input w-fit">
+                <FaRegImage />
+                <input placeholder="Upload Image" onClick={() => open()} />
+              </label>
+            )}
+          </CldUploadWidget>
+          {publicId && (
+            <CldImage src={publicId} alt="pic" width={170} height={10} />
+          )}
+          {publicId == "" && (
+            <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
+          )}
           {/* price*/}
           <label className="custom-form-input">
             <PiCoinsThin />

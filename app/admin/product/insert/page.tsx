@@ -120,7 +120,6 @@ const InsertProduct = () => {
           <label className="custom-form-input">
             <PiCoinsThin />
             <input
-              type="number"
               placeholder="Price"
               {...register("price", { valueAsNumber: true })}
             />

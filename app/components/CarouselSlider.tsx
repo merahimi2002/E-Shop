@@ -41,7 +41,7 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
           onSwipeRight={handlePrevSlide}
           className="relative z-10 w-full h-full"
         >
-          <div className="w-full h-full">
+          <div className="w-full h-full relative">
             {images.map((image, index) => {
               if (index === currentSlide) {
                 return (

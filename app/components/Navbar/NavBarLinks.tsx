@@ -30,7 +30,7 @@ const NavBarLinks = () => {
         }
       >
         <details>
-          <summary className="active:bg-transparent !important">
+          <summary className="active:remove-bg">
             <Link href="/product">Product</Link>
           </summary>
           <ul className="p-2 z-50">

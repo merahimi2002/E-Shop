@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import { TextSummarizer } from "../components/TextSummarizer";
-import { FormatCurrency } from "../components/formatCurrency";
+import { FormatCurrency } from "../components/FormatCurrency";
 
 const ProductPage = async () => {
   const Products = await prisma.product.findMany();

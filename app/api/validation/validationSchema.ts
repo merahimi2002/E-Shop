@@ -5,6 +5,7 @@ export const createProductSchema = z.object({
   description: z.string().min(1, "Description is required"),
   imageUrl: z.string().min(1, "Image is required").max(255),
   price: z.number().multipleOf(0.01, "Put two number after point"),
+  categoryId: z.number().min(1, "category required"),
 });
 
 export const createCategorySchema = z.object({

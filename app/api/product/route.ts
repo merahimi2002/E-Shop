@@ -14,6 +14,7 @@ export async function POST(request: NextResponse) {
       description: body.description,
       imageUrl: body.imageUrl,
       price: body.price,
+      categoryId: body.categoryId,
     },
   });
 

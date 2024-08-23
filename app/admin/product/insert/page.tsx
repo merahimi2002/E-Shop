@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createProductSchema } from "@/app/api/validation/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -20,6 +20,11 @@ type InsertProductProps = z.infer<typeof createProductSchema>;
 interface CloudinaryResult {
   public_id: string;
   url: string;
+}
+
+interface CategoryInsertProduct {
+  id: number;
+  title: string;
 }
 
 const InsertProduct = () => {
@@ -46,6 +51,19 @@ const InsertProduct = () => {
     }
   });
   const [publicId, setPublicId] = useState("");
+  const [categories, setCategories] = useState<CategoryInsertProduct[]>([]);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/category");
+        setCategories(response.data);
+      } catch (error) {
+        setError("Failed to load categories");
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <div className="container my-4">
       <ErrorMessage>{error}</ErrorMessage>
@@ -108,12 +126,21 @@ const InsertProduct = () => {
             />
           </label>
           <ErrorMessage>{errors.price?.message}</ErrorMessage>
-          {/* <select className="select w-full md:w-1/3 input-bordered">
-          <option disabled selected>
-            Category
-          </option>
-          <option>Homer</option>
-        </select> */}
+          {/* category */}
+          <select
+            className="select custom-form-input"
+            {...register("categoryId", { valueAsNumber: true })}
+          >
+            <option value="" disabled>
+              Select a Category
+            </option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.title}
+              </option>
+            ))}
+          </select>
+          <ErrorMessage>{errors.categoryId?.message}</ErrorMessage>
           <button
             disabled={isSubmiting}
             className="btn btn-secondary w-fit mt-5"

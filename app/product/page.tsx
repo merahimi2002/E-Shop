@@ -2,9 +2,21 @@ import prisma from "@/prisma/client";
 import { TextSummarizer } from "../components/TextSummarizer";
 import { FormatCurrency } from "../components/FormatCurrency";
 
+export const CategoryName = async (Id: number | null) => {
+  if (Id == null) {
+    return null;
+  }
+  const Categories = await prisma.category.findUnique({
+    where: {
+      id: Id,
+    },
+  });
+
+  return <p>{Categories?.title}</p>;
+};
+
 const ProductPage = async () => {
   const Products = await prisma.product.findMany();
-
   return (
     <section>
       <div className="container">
@@ -26,6 +38,9 @@ const ProductPage = async () => {
                 <span className="text-secondary text-right text-lg font-medium">
                   {FormatCurrency(product.price).toString()}
                 </span>
+                <p className="text-accent">
+                  {CategoryName(product.categoryId)}
+                </p>
                 <p className="text-white">
                   {TextSummarizer(product.description, 100)}
                 </p>

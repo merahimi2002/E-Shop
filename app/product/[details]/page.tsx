@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
 import CategoryIdToName from "../_components/CategoryIdToName";
 import FormatCurrency from "../_components/FormatCurrency";
+import ReactMarkdown from "react-markdown";
 
 interface Props {
   params: { details: string };
@@ -37,7 +38,9 @@ const ProductDetailsPage = async ({ params }: Props) => {
               <p className="text-secondary text-right text-lg font-medium">
                 {FormatCurrency(product.price).toString()}
               </p>
-              <p>{product.description}</p>
+              <div className="prose prose-neutral">
+                <ReactMarkdown>{product.description}</ReactMarkdown>
+              </div>
             </div>
           </div>
         ))}

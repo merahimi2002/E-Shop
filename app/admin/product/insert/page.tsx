@@ -44,7 +44,7 @@ const InsertProduct = () => {
     try {
       setIsSubmiting(true);
       await axios.post("/api/product", data);
-      router.push("/");
+      router.push("/product");
     } catch (error) {
       setIsSubmiting(false);
       setError("an unexpected error occurred");

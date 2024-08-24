@@ -22,12 +22,21 @@ const config: Config = {
           "100%": { opacity: "1" },
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            "li::marker": {
+              color: "#d90077"
+            },
+          },
+        },
+      },
     },
     container: {
       center: true,
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("@tailwindcss/typography")],
   daisyui: {
     themes: [
       {
@@ -37,8 +46,8 @@ const config: Config = {
           accent: "#00bfa5",
           neutral: "#ffcc00",
           "base-100": "#f4f4f4",
-          "base-200" : "#000000",
-          "info-content" : "#2e2e3a"
+          "base-200": "#000000",
+          "info-content": "#2e2e3a",
         },
       },
       {
@@ -49,8 +58,8 @@ const config: Config = {
           accent: "#00bfa5",
           neutral: "#ffcc00",
           "base-100": "#000000",
-          "base-200" : "#f4f4f4",
-          "info-content" : "#2e2e3a"
+          "base-200": "#f4f4f4",
+          "info-content": "#2e2e3a",
         },
       },
       "light",

@@ -14,27 +14,28 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import { Product } from "@prisma/client";
 
-type InsertProductProps = z.infer<typeof createProductSchema>;
+type ProductFormProps = z.infer<typeof createProductSchema>;
+
+interface CategoryProductForm {
+  id: number;
+  title: string;
+}
 
 interface CloudinaryResult {
   public_id: string;
   url: string;
 }
 
-interface CategoryInsertProduct {
-  id: number;
-  title: string;
-}
-
-const InsertProduct = () => {
+const ProductForm = ({ product }: { product?: Product }) => {
   const {
     register,
     control,
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<InsertProductProps>({
+  } = useForm<ProductFormProps>({
     resolver: zodResolver(createProductSchema),
   });
   const router = useRouter();
@@ -51,7 +52,7 @@ const InsertProduct = () => {
     }
   });
   const [publicId, setPublicId] = useState("");
-  const [categories, setCategories] = useState<CategoryInsertProduct[]>([]);
+  const [categories, setCategories] = useState<CategoryProductForm[]>([]);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -72,13 +73,19 @@ const InsertProduct = () => {
           {/* title */}
           <label className="custom-form-input">
             <MdDriveFileRenameOutline />
-            <input type="text" placeholder="Name" {...register("title")} />
+            <input
+              type="text"
+              placeholder="Name"
+              defaultValue={product?.title}
+              {...register("title")}
+            />
           </label>
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
           {/* description */}
           <Controller
             name="description"
             control={control}
+            defaultValue={product?.description}
             render={({ field }) => (
               <SimpleMDE
                 placeholder="Description"
@@ -111,7 +118,21 @@ const InsertProduct = () => {
             )}
           </CldUploadWidget>
           {publicId && (
-            <CldImage src={publicId} alt="pic" width={170} height={10} />
+            <CldImage
+              src={publicId}
+              alt="pic"
+              width={170}
+              height={10}
+              defaultValue={product?.imageUrl}
+            />
+          )}
+          {product?.imageUrl && !publicId && (
+            <img
+              width={170}
+              height={10}
+              src={product.imageUrl}
+              {...register("imageUrl")}
+            />
           )}
           {publicId == "" && (
             <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
@@ -120,6 +141,7 @@ const InsertProduct = () => {
           <label className="custom-form-input">
             <PiCoinsThin />
             <input
+              defaultValue={Number(product?.price)}
               placeholder="Price"
               {...register("price", { valueAsNumber: true })}
             />
@@ -129,10 +151,18 @@ const InsertProduct = () => {
           <select
             className="select custom-form-input"
             {...register("categoryId", { valueAsNumber: true })}
+            defaultValue={product?.categoryId?.toString()}
           >
-            <option value="" disabled>
+            <option selected disabled>
               Select a Category
             </option>
+            {product?.categoryId && (
+              <option selected disabled value={product.id}>
+                {categories.map((category) => (
+                  category.id === product.categoryId ? category.title : ""
+                ))}
+              </option>
+            )}
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.title}
@@ -155,4 +185,4 @@ const InsertProduct = () => {
   );
 };
 
-export default InsertProduct;
+export default ProductForm;

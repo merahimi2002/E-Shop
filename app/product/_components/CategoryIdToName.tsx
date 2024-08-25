@@ -10,7 +10,7 @@ const CategoryIdToName = async ({ Id }: { Id: number | null }) => {
     },
   });
 
-  return <p>{Categories?.title}</p>;
+  return Categories?.title;
 };
 
 export default CategoryIdToName;

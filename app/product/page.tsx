@@ -11,6 +11,7 @@ const ProductPage = async () => {
             <ProductCard
               id={product.id}
               title={product.title}
+              slug={product.slug}
               description={product.description}
               imageUrl={product.imageUrl}
               price={product.price}

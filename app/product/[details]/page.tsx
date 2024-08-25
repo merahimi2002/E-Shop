@@ -11,9 +11,8 @@ interface Props {
 }
 
 const ProductDetailsPage = async ({ params }: Props) => {
-  const url = params.details.replace("%20", " ");
-  const Products = await prisma.product.findMany({
-    where: { title: String(url) },
+  const Products = await prisma.product.findUnique({
+    where: { slug: String(params.details) },
   });
 
   if (!Products) {
@@ -23,35 +22,33 @@ const ProductDetailsPage = async ({ params }: Props) => {
   return (
     <section>
       <div className="container">
-        {Products.map((product) => (
-          <div className="grid grid-cols-2 gap-6">
-            <div className="col-span-2">
-              <button className="btn btn-primary w-fit text-xl px-5 my-3">
-                <FiEdit />
-                <Link href={`/admin/product/update/${product.title}`}>Edit</Link>
-              </button>
+        <div className="grid grid-cols-2 gap-6">
+          <div className="col-span-2">
+            <button className="btn btn-primary w-fit text-xl px-5 my-3">
+              <FiEdit />
+              <Link href={`/admin/product/update/${Products.slug}`}>Edit</Link>
+            </button>
+          </div>
+          <div className="col-span-2 lg:col-span-1">
+            <img
+              src={Products.imageUrl}
+              alt={Products.title}
+              className="w-full object-contain rounded-xl"
+            />
+          </div>
+          <div className="col-span-2 md:col-span-1">
+            <h1 className="Titr">{Products.title}</h1>
+            <div className="text-accent">
+              <CategoryIdToName Id={Products.categoryId} />
             </div>
-            <div className="col-span-2 lg:col-span-1">
-              <img
-                src={product.imageUrl}
-                alt={product.title}
-                className="w-full object-contain rounded-xl"
-              />
-            </div>
-            <div className="col-span-2 md:col-span-1">
-              <h1 className="Titr">{product.title}</h1>
-              <div className="text-accent">
-                <CategoryIdToName Id={product.categoryId} />
-              </div>
-              <p className="text-secondary text-right text-lg font-medium">
-                {FormatCurrency(product.price).toString()}
-              </p>
-              <div className="prose prose-neutral">
-                <ReactMarkdown>{product.description}</ReactMarkdown>
-              </div>
+            <p className="text-secondary text-right text-lg font-medium">
+              {FormatCurrency(Products.price).toString()}
+            </p>
+            <div className="prose prose-neutral">
+              <ReactMarkdown>{Products.description}</ReactMarkdown>
             </div>
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );

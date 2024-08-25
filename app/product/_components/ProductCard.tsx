@@ -6,6 +6,7 @@ import FormatCurrency from "./FormatCurrency";
 interface ProductCardProps {
   id: number;
   title: string;
+  slug:string;
   description: string;
   imageUrl: string;
   price: any;
@@ -15,6 +16,7 @@ interface ProductCardProps {
 const ProductCard = ({
   id,
   title,
+  slug,
   description,
   imageUrl,
   price,
@@ -28,7 +30,7 @@ const ProductCard = ({
       <img className="w-full h-1/2 object-contain" src={imageUrl} alt={title} />
       <div className="card-body">
         <div className="card-title text-xl text-primary font-semibold pb-4">
-          <Link href={`/product/${title}`}>
+          <Link href={`/product/${slug}`}>
             <TextSummarizer text={title} maxChars={40} />
           </Link>
         </div>

@@ -32,13 +32,16 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const {
     register,
     control,
+    watch,
     setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<ProductFormProps>({
     resolver: zodResolver(createProductSchema),
   });
+  // to relocated user
   const router = useRouter();
+  // handling error
   const [error, setError] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
   const onSubmit = handleSubmit(async (data) => {
@@ -51,7 +54,17 @@ const ProductForm = ({ product }: { product?: Product }) => {
       setError("an unexpected error occurred");
     }
   });
+  // set default value for slug
+  const titleValue = watch("title");
+  useEffect(() => {
+    if (titleValue) {
+      const slug = titleValue.toLowerCase().replace(/\s+/g, "-");
+      setValue("slug", slug);
+    }
+  }, [titleValue, setValue]);
+  // give cloudinary image
   const [publicId, setPublicId] = useState("");
+  // add category
   const [categories, setCategories] = useState<CategoryProductForm[]>([]);
   useEffect(() => {
     const fetchCategories = async () => {
@@ -81,6 +94,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
             />
           </label>
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
+          {/* {slug} */}
+          <ErrorMessage>{errors.slug?.message}</ErrorMessage>
           {/* description */}
           <Controller
             name="description"
@@ -158,9 +173,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
             </option>
             {product?.categoryId && (
               <option selected disabled value={product.id}>
-                {categories.map((category) => (
+                {categories.map((category) =>
                   category.id === product.categoryId ? category.title : ""
-                ))}
+                )}
               </option>
             )}
             {categories.map((category) => (

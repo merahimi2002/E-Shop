@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ProductSchema } from "@/app/api/validation/validationSchema";
+import { Product } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -14,7 +15,6 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import { Product } from "@prisma/client";
 
 type ProductFormProps = z.infer<typeof ProductSchema>;
 
@@ -63,9 +63,48 @@ const ProductForm = ({ product }: { product?: Product }) => {
       setValue("slug", slug);
     }
   }, [titleValue, setValue]);
-  // give cloudinary image
+
+  // UploadImage to Cloudinary
   const [publicId, setPublicId] = useState("");
-  // add category
+
+  const UploadImage = (
+    <>
+      <CldUploadWidget
+        uploadPreset="DBimage"
+        options={{
+          sources: ["local"],
+          multiple: false,
+          maxFiles: 2,
+          maxFileSize: 1000000, // 1 Mb
+        }}
+        onSuccess={(result) => {
+          const info = result.info as CloudinaryResult;
+          setPublicId(info.public_id);
+          setValue("imageUrl", info.url);
+        }}
+      >
+        {({ open }) => (
+          <label className="custom-form-input w-fit">
+            <FaRegImage />
+            <input placeholder="Upload Image" onClick={() => open()} />
+          </label>
+        )}
+      </CldUploadWidget>
+      {publicId && (
+        <CldImage src={publicId} alt="pic" width={170} height={10} />
+      )}
+      {publicId == "" && <ErrorMessage>{error}</ErrorMessage>}
+      {/* for update */}
+      {product && !publicId && (
+        <>
+          <img width={170} height={10} src={product.imageUrl} />
+          {setValue("imageUrl", product.imageUrl)}
+        </>
+      )}
+    </>
+  );
+
+  // SelectCategory
   const [categories, setCategories] = useState<CategoryProductForm[]>([]);
   useEffect(() => {
     const fetchCategories = async () => {
@@ -78,6 +117,31 @@ const ProductForm = ({ product }: { product?: Product }) => {
     };
     fetchCategories();
   }, []);
+  const SelectCategory = (
+    <>
+      <select
+        className="select custom-form-input"
+        {...register("categoryId", { valueAsNumber: true })}
+        defaultValue={product?.categoryId?.toString()}
+      >
+        {!product ? <option disabled>Select a Category</option> : null}
+        {/* for update */}
+        {product?.categoryId && (
+          <option disabled value={product.categoryId}>
+            {categories.map((category) =>
+              category.id === product.categoryId ? category.title : ""
+            )}
+          </option>
+        )}
+        {categories.map((category) => (
+          <option key={category.id} value={category.id}>
+            {category.title}
+          </option>
+        ))}
+      </select>
+      <ErrorMessage>{errors.categoryId?.message}</ErrorMessage>
+    </>
+  );
 
   return (
     <div className="container my-4">
@@ -112,40 +176,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
           />
           <ErrorMessage>{errors.description?.message}</ErrorMessage>
           {/* imageUrl */}
-          <CldUploadWidget
-            uploadPreset="DBimage"
-            options={{
-              sources: ["local"],
-              multiple: false,
-              maxFiles: 2,
-              maxFileSize: 1000000, // 1 Mb
-            }}
-            onSuccess={(result) => {
-              const info = result.info as CloudinaryResult;
-              setPublicId(info.public_id);
-              setValue("imageUrl", info.url);
-            }}
-          >
-            {({ open }) => (
-              <label className="custom-form-input w-fit">
-                <FaRegImage />
-                <input placeholder="Upload Image" onClick={() => open()} />
-              </label>
-            )}
-          </CldUploadWidget>
-          {publicId && (
-            <CldImage src={publicId} alt="pic" width={170} height={10} />
-          )}
-          {publicId == "" && (
-            <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
-          )}
-          {/* for update */}
-          {product && !publicId && (
-            <>
-              <img width={170} height={10} src={product.imageUrl} />
-              {setValue("imageUrl", product.imageUrl)}
-            </>
-          )}
+          {UploadImage}
           {/* price*/}
           <label className="custom-form-input">
             <PiCoinsThin />
@@ -157,31 +188,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
           </label>
           <ErrorMessage>{errors.price?.message}</ErrorMessage>
           {/* category */}
-          <select
-            className="select custom-form-input"
-            {...register("categoryId", { valueAsNumber: true })}
-            defaultValue={product?.categoryId?.toString()}
-          >
-            {!product ? (
-              <option disabled>
-                Select a Category
-              </option>
-            ) : null}
-            {/* for update */}
-            {product?.categoryId && (
-              <option disabled value={product.categoryId}>
-                {categories.map((category) =>
-                  category.id === product.categoryId ? category.title : ""
-                )}
-              </option>
-            )}
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.title}
-              </option>
-            ))}
-          </select>
-          <ErrorMessage>{errors.categoryId?.message}</ErrorMessage>
+          {SelectCategory}
+
           <button
             disabled={isSubmiting}
             className="btn btn-secondary w-fit mt-5"

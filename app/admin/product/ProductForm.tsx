@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { createProductSchema } from "@/app/api/validation/validationSchema";
+import { ProductSchema } from "@/app/api/validation/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -16,7 +16,7 @@ import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { Product } from "@prisma/client";
 
-type ProductFormProps = z.infer<typeof createProductSchema>;
+type ProductFormProps = z.infer<typeof ProductSchema>;
 
 interface CategoryProductForm {
   id: number;
@@ -37,7 +37,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<ProductFormProps>({
-    resolver: zodResolver(createProductSchema),
+    resolver: zodResolver(ProductSchema),
   });
   // to relocated user
   const router = useRouter();

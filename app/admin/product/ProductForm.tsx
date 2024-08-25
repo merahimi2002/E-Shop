@@ -47,7 +47,8 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmiting(true);
-      await axios.post("/api/product", data);
+      if (product) await axios.patch("/api/product/" + product.slug, data);
+      else await axios.post("/api/product", data);
       router.push("/product");
     } catch (error) {
       setIsSubmiting(false);
@@ -117,7 +118,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
               sources: ["local"],
               multiple: false,
               maxFiles: 2,
-              maxFileSize: 1000000,
+              maxFileSize: 1000000, // 1 Mb
             }}
             onSuccess={(result) => {
               const info = result.info as CloudinaryResult;
@@ -133,30 +134,23 @@ const ProductForm = ({ product }: { product?: Product }) => {
             )}
           </CldUploadWidget>
           {publicId && (
-            <CldImage
-              src={publicId}
-              alt="pic"
-              width={170}
-              height={10}
-              defaultValue={product?.imageUrl}
-            />
-          )}
-          {product?.imageUrl && !publicId && (
-            <img
-              width={170}
-              height={10}
-              src={product.imageUrl}
-              {...register("imageUrl")}
-            />
+            <CldImage src={publicId} alt="pic" width={170} height={10} />
           )}
           {publicId == "" && (
             <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
+          )}
+          {/* for update */}
+          {product && !publicId && (
+            <>
+              <img width={170} height={10} src={product.imageUrl} />
+              {setValue("imageUrl", product.imageUrl)}
+            </>
           )}
           {/* price*/}
           <label className="custom-form-input">
             <PiCoinsThin />
             <input
-              defaultValue={Number(product?.price)}
+              defaultValue={product ? Number(product?.price) : ""}
               placeholder="Price"
               {...register("price", { valueAsNumber: true })}
             />
@@ -171,6 +165,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
             <option selected disabled>
               Select a Category
             </option>
+            {/* for update */}
             {product?.categoryId && (
               <option selected disabled value={product.id}>
                 {categories.map((category) =>
@@ -189,7 +184,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
             disabled={isSubmiting}
             className="btn btn-secondary w-fit mt-5"
           >
-            Add New Product
+            {product ? "Update Product" : "Add New Product"}
             {isSubmiting && (
               <span className="loading loading-spinner loading-md"></span>
             )}

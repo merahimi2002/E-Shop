@@ -162,12 +162,14 @@ const ProductForm = ({ product }: { product?: Product }) => {
             {...register("categoryId", { valueAsNumber: true })}
             defaultValue={product?.categoryId?.toString()}
           >
-            <option selected disabled>
-              Select a Category
-            </option>
+            {!product ? (
+              <option disabled>
+                Select a Category
+              </option>
+            ) : null}
             {/* for update */}
             {product?.categoryId && (
-              <option selected disabled value={product.id}>
+              <option disabled value={product.categoryId}>
                 {categories.map((category) =>
                   category.id === product.categoryId ? category.title : ""
                 )}

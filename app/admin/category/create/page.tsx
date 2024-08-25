@@ -1,7 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { createCategorySchema } from "@/app/api/validation/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -24,12 +24,15 @@ const InsertCategory = () => {
   const {
     register,
     handleSubmit,
+    watch,
     setValue,
     formState: { errors },
   } = useForm<InsertCategoryProps>({
     resolver: zodResolver(createCategorySchema),
   });
+  // to relocated user
   const router = useRouter();
+  // handling error
   const [error, setError] = useState("");
   const [isSubmiting, setIsSubmiting] = useState(false);
   const onSubmit = handleSubmit(async (data) => {
@@ -42,6 +45,16 @@ const InsertCategory = () => {
       setError("an unexpected error occurred");
     }
   });
+  // set default value for slug
+  const titleValue = watch("title");
+  useEffect(() => {
+    if (titleValue) {
+      const slug = titleValue.toLowerCase().replace(/\s+/g, "-");
+      setValue("slug", slug);
+    }
+  }, [titleValue, setValue]);
+
+  // give cloudinary image
   const [publicId, setPublicId] = useState("");
   return (
     <div className="container my-4">
@@ -54,6 +67,8 @@ const InsertCategory = () => {
             <input type="text" placeholder="Name" {...register("title")} />
           </label>
           <ErrorMessage>{errors.title?.message}</ErrorMessage>
+          {/* {slug} */}
+          <ErrorMessage>{errors.slug?.message}</ErrorMessage>
           {/* imageUrl */}
           <CldUploadWidget
             uploadPreset="DBimage"

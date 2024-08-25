@@ -11,6 +11,7 @@ export async function POST(request: NextResponse) {
   const newProduct = await prisma.product.create({
     data: {
       title: body.title,
+      slug:body.slug,
       description: body.description,
       imageUrl: body.imageUrl,
       price: body.price,

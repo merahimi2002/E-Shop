@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createCategorySchema } from "@/app/api/validation/validationSchema";
+import { CategorySchema } from "@/app/api/validation/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -13,7 +13,7 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 import "easymde/dist/easymde.min.css";
 
-type InsertCategoryProps = z.infer<typeof createCategorySchema>;
+type InsertCategoryProps = z.infer<typeof CategorySchema>;
 
 interface CloudinaryResult {
   public_id: string;
@@ -28,7 +28,7 @@ const InsertCategory = () => {
     setValue,
     formState: { errors },
   } = useForm<InsertCategoryProps>({
-    resolver: zodResolver(createCategorySchema),
+    resolver: zodResolver(CategorySchema),
   });
   // to relocated user
   const router = useRouter();

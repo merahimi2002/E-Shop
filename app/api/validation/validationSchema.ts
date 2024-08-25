@@ -9,7 +9,7 @@ export const ProductSchema = z.object({
   categoryId: z.number().min(1, "category required"),
 });
 
-export const createCategorySchema = z.object({
+export const CategorySchema = z.object({
   title: z.string().min(1, "Title is required").max(50),
   slug: z.string().min(1, "Slug is required").max(50),
   imageUrl: z.string().min(1, "Image is required").max(255),

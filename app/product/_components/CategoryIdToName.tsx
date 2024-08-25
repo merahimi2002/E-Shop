@@ -1,10 +1,6 @@
 import prisma from "@/prisma/client";
 
-interface CategoryIdToNameProps {
-  Id: number | null;
-}
-
-const CategoryIdToName = async ({ Id }: CategoryIdToNameProps) => {
+const CategoryIdToName = async ({ Id }: { Id: number | null }) => {
   if (Id == null) {
     return null;
   }

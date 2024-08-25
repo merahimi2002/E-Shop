@@ -19,7 +19,7 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid Product" }, { status: 404 });
 
   const updatedProduct = await prisma.product.update({
-    where: { title: params.slug },
+    where: { slug: params.slug },
     data: {
       title: body.title,
       description: body.description,

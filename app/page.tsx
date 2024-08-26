@@ -1,5 +1,6 @@
 import { About } from "./about/about";
 import CarouselSlider from "./components/CarouselSlider";
+import Category from "./components/Category/Category";
 
 export default function Home() {
   const Sliders = [
@@ -13,6 +14,7 @@ export default function Home() {
         <CarouselSlider images={Sliders} />
       </div>
       <About />
+      <Category />
     </>
   );
 }

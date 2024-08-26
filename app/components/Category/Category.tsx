@@ -10,7 +10,10 @@ const Category = async () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {Categories.map((category) => (
-            <div key={category.id} className="card">
+            <div
+              key={category.id}
+              className="card custom-four-color translate-hover"
+            >
               <figure>
                 <img
                   className="rounded-xl shadow-md"

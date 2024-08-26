@@ -49,24 +49,24 @@ const AboutPage = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mt-10">
-            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center duration-300 hover:-translate-y-2 hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
+            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center translate-hover hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
               <h5 className="Titr text-xl mb-5">Quality Assurance</h5>
               <p className="">
                 Get the latest technology at prices that won’t break the bank.
               </p>
             </div>
-            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center duration-300 hover:-translate-y-2 hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
+            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center translate-hover hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
               <h5 className="Titr text-xl mb-5 "> Competitive Pricing</h5>
               <p>We source only genuine products from trusted brands.</p>
             </div>
-            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center duration-300 hover:-translate-y-2 hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
+            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center translate-hover hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
               <h5 className="Titr text-xl mb-5 ">Customer Satisfaction</h5>
               <p>
                 We pride ourselves on delivering a seamless shopping experience,
                 both in-store and online.
               </p>
             </div>
-            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center duration-300 hover:-translate-y-2 hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
+            <div className="flex-center h-full shadow-md border-solid border-4 rounded-lg m-2 border-primary p-6 text-center translate-hover hover:rounded-xl hover:bg-gradient-to-b from-accent to-primary">
               <h5 className="Titr text-xl mb-5 text-center">Tech Expertise</h5>
               <p>
                 Our team stays updated with the latest trends and technologies

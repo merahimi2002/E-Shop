@@ -31,6 +31,14 @@
     @apply w-full md:w-1/3 input input-bordered border-primary flex items-center gap-2 hover:input-bordered hover:border-primary;
   }
 
+  .translate-hover {
+    @apply duration-300 hover:-translate-y-2
+  }
+
+  .custom-four-color{
+    @apply bg-primary [&:nth-child(2n)]:bg-secondary [&:nth-child(3n)]:bg-neutral [&:nth-child(4n)]:bg-accent
+  }
+
   .remove-bg{
     background: none !important;
   }

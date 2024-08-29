@@ -5,7 +5,7 @@ import CategoryIdToName from "../_components/CategoryIdToName";
 import FormatCurrency from "../_components/FormatCurrency";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
-import AlartModals from "../_components/AlartModals";
+import DeleteProductModale from "../_components/DeleteProductModale";
 
 interface Props {
   params: { details: string };
@@ -32,7 +32,7 @@ const ProductDetailsPage = async ({ params }: Props) => {
                   Edit
                 </button>
               </Link>
-              <AlartModals/>
+              <DeleteProductModale slug={Products.slug} />
             </div>
           </div>
           <div className="col-span-2 lg:col-span-1">

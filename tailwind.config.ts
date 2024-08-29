@@ -48,6 +48,7 @@ const config: Config = {
           "base-100": "#f4f4f4",
           "base-200": "#000000",
           "info-content": "#2e2e3a",
+          error : "#b0004c",
         },
       },
       {
@@ -60,6 +61,7 @@ const config: Config = {
           "base-100": "#000000",
           "base-200": "#f4f4f4",
           "info-content": "#2e2e3a",
+          error : "#b0004c",
         },
       },
       "light",

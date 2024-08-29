@@ -5,6 +5,7 @@ import CategoryIdToName from "../_components/CategoryIdToName";
 import FormatCurrency from "../_components/FormatCurrency";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
+import AlartModals from "../_components/AlartModals";
 
 interface Props {
   params: { details: string };
@@ -24,12 +25,15 @@ const ProductDetailsPage = async ({ params }: Props) => {
       <div className="container">
         <div className="grid grid-cols-2 gap-6">
           <div className="col-span-2">
-            <Link href={`/admin/product/update/${Products.slug}`}>
-              <button className="btn btn-primary w-fit text-xl px-5 my-3">
-                <FiEdit />
-                Edit
-              </button>
-            </Link>
+            <div className="flex gap-4">
+              <Link href={`/admin/product/update/${Products.slug}`}>
+                <button className="btn btn-primary w-fit text-xl px-5 my-3">
+                  <FiEdit />
+                  Edit
+                </button>
+              </Link>
+              <AlartModals/>
+            </div>
           </div>
           <div className="col-span-2 lg:col-span-1">
             <img

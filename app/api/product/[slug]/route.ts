@@ -22,6 +22,7 @@ export async function PATCH(
     where: { slug: params.slug },
     data: {
       title: body.title,
+      slug:body.slug,
       description: body.description,
       imageUrl: body.imageUrl,
       price: body.price,

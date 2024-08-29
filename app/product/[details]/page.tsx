@@ -24,10 +24,12 @@ const ProductDetailsPage = async ({ params }: Props) => {
       <div className="container">
         <div className="grid grid-cols-2 gap-6">
           <div className="col-span-2">
-            <button className="btn btn-primary w-fit text-xl px-5 my-3">
-              <FiEdit />
-              <Link href={`/admin/product/update/${Products.slug}`}>Edit</Link>
-            </button>
+            <Link href={`/admin/product/update/${Products.slug}`}>
+              <button className="btn btn-primary w-fit text-xl px-5 my-3">
+                <FiEdit />
+                Edit
+              </button>
+            </Link>
           </div>
           <div className="col-span-2 lg:col-span-1">
             <img

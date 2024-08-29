@@ -11,7 +11,7 @@ export async function PATCH(
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
 
-  const product = await prisma.product.findMany({
+  const product = await prisma.product.findUnique({
     where: { slug: params.slug },
   });
 
@@ -22,7 +22,7 @@ export async function PATCH(
     where: { slug: params.slug },
     data: {
       title: body.title,
-      slug:body.slug,
+      slug: body.slug,
       description: body.description,
       imageUrl: body.imageUrl,
       price: body.price,
@@ -31,4 +31,22 @@ export async function PATCH(
   });
 
   return NextResponse.json(updatedProduct);
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const product = await prisma.product.findUnique({
+    where: { slug: params.slug },
+  });
+
+  if (!product)
+    return NextResponse.json({ error: "Invalid Product" }, { status: 404 });
+
+  await prisma.product.delete({
+    where: { slug: params.slug },
+  });
+
+  return NextResponse.json({});
 }

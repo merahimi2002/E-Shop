@@ -56,7 +56,7 @@
   }
 
   .thead-primary thead tr th{
-    @apply py-6 text-xl text-secondary
+    @apply py-6 text-xl text-secondary bg-primary
   }
   
 

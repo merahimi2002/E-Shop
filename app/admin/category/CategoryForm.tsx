@@ -41,7 +41,8 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       setIsSubmiting(true);
       if (category) await axios.patch("/api/category/" + category.slug, data);
       else await axios.post("/api/category", data);
-      router.push("/");
+      router.push("/admin/category");
+      router.refresh()
     } catch (error) {
       setIsSubmiting(false);
       setError("an unexpected error occurred");

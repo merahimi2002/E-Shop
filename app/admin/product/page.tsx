@@ -1,10 +1,10 @@
+import { FiEdit } from "react-icons/fi";
+import Link from "next/link";
+import prisma from "@/prisma/client";
+import DeleteProduct from "./_components/DeleteProduct";
 import CategoryIdToName from "@/app/components/Product/CategoryIdToName";
 import FormatCurrency from "@/app/components/Product/FormatCurrency";
 import TextSummarizer from "@/app/components/Product/TextSummarizer";
-import prisma from "@/prisma/client";
-import Link from "next/link";
-import { FiEdit } from "react-icons/fi";
-import DeleteProduct from "./_components/DeleteProduct";
 
 const AdminProduct = async () => {
   const Products = await prisma.product.findMany();
@@ -20,7 +20,7 @@ const AdminProduct = async () => {
             </Link>
           </div>
           <table className="table table-auto table-striped table-hover thead-primary">
-            <thead className="bg-primary">
+            <thead>
               <tr className="text-center">
                 <th>Product</th>
                 <th>Title</th>

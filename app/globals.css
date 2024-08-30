@@ -47,6 +47,10 @@
     @apply  bg-error hover:bg-error bg-opacity-50 hover:bg-opacity-50 text-inherit hover:text-inherit  cursor-not-allowed pointer-events-auto
   }
 
+  .table td {
+    @apply text-lg
+  }
+
   .table-striped tbody tr {
     @apply  [&:nth-child(even)]:bg-base-200 [&:nth-child(even)]:bg-opacity-10
   }

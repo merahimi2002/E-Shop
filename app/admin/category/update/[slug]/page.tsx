@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
-import CategoryForm from "../../CategoryForm";
+import CategoryForm from "../../_components/CategoryForm";
 
 interface UpdateCategoryProps {
   params: { slug: string };

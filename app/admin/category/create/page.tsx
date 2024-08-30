@@ -1,4 +1,4 @@
-import CategoryForm from "../CategoryForm";
+import CategoryForm from "../_components/CategoryForm";
 
 const CreateCategory = () => {
   return <CategoryForm />;

@@ -29,3 +29,21 @@ export async function PATCH(
 
   return NextResponse.json(updatedCategory);
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  const category = await prisma.category.findUnique({
+    where: { slug: params.slug },
+  });
+
+  if (!category)
+    return NextResponse.json({ error: "Invalid category" }, { status: 404 });
+
+  await prisma.category.delete({
+    where: { slug: params.slug },
+  });
+
+  return NextResponse.json({});
+}

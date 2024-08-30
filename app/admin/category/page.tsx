@@ -1,6 +1,7 @@
 import { FiEdit } from "react-icons/fi";
 import prisma from "@/prisma/client";
 import Link from "next/link";
+import DeleteCategory from "./_components/DeleteCategory";
 
 
 const AdminCategory = async () => {
@@ -9,6 +10,13 @@ const AdminCategory = async () => {
     <section>
       <div className="container">
         <div className="overflow-x-auto">
+        <div className="flex gap-4 mb-5">
+            <Link href="/admin/category/create">
+              <button className="btn btn-success text-base-200 w-fit text-xl px-4">
+                New Category
+              </button>
+            </Link>
+          </div>
           <table className="table table-auto table-striped table-hover thead-primary">
             <thead>
               <tr className="text-center">
@@ -35,6 +43,7 @@ const AdminCategory = async () => {
                           <FiEdit />
                         </button>
                       </Link>
+                      <DeleteCategory slug={category.slug}/>
                     </div>
                   </td>
                 </tr>

@@ -35,17 +35,26 @@
     @apply duration-300 hover:-translate-y-2
   }
 
-  .custom-four-color{
+  .custom-four-color {
     @apply bg-primary [&:nth-child(2n)]:bg-secondary [&:nth-child(3n)]:bg-neutral [&:nth-child(4n)]:bg-accent
   }
 
-  .remove-bg{
+  .remove-bg {
     background: none !important;
   }
 
-  .btn.btn-disabled, .btn[disabled], .btn:disabled{
+  .btn.btn-disabled, .btn[disabled], .btn:disabled {
     @apply  bg-error hover:bg-error bg-opacity-50 hover:bg-opacity-50 text-inherit hover:text-inherit  cursor-not-allowed pointer-events-auto
   }
+
+  .table-striped tbody tr {
+    @apply  [&:nth-child(even)]:bg-base-200 [&:nth-child(even)]:bg-opacity-10
+  }
+
+  .table-hover tbody tr {
+    @apply hover:bg-base-200 hover:bg-opacity-20
+  }
+  
 
 }
 

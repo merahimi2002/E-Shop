@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 import prisma from "@/prisma/client";
-import CategoryIdToName from "../_components/CategoryIdToName";
-import FormatCurrency from "../_components/FormatCurrency";
+import CategoryIdToName from "../../components/CategoryIdToName";
+import FormatCurrency from "../../components/FormatCurrency";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import DeleteProductModale from "../_components/DeleteProductModale";

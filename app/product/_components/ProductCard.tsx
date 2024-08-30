@@ -1,7 +1,7 @@
 import Link from "next/link";
-import CategoryIdToName from "./CategoryIdToName";
+import CategoryIdToName from "../../components/CategoryIdToName";
 import TextSummarizer from "@/app/components/TextSummarizer";
-import FormatCurrency from "./FormatCurrency";
+import FormatCurrency from "../../components/FormatCurrency";
 
 interface ProductCardProps {
   id: number;

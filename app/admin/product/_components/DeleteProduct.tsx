@@ -5,10 +5,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdError } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import Modals from "../../components/Modals";
+import Modals from "../../../components/Modals";
 import axios from "axios";
 
-const DeleteProductModale = ({ slug }: { slug: string }) => {
+const DeleteProduct = ({ slug }: { slug: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -80,4 +80,4 @@ const DeleteProductModale = ({ slug }: { slug: string }) => {
   );
 };
 
-export default DeleteProductModale;
+export default DeleteProduct;

@@ -1,4 +1,4 @@
-import ProductForm from "../ProductForm";
+import ProductForm from "../_components/ProductForm";
 
 const CreateProduct = () => {
   return <ProductForm />;

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
-import ProductForm from "../../ProductForm";
+import ProductForm from "../../_components/ProductForm";
 
 interface UpdateProductProps {
   params: { slug: string };

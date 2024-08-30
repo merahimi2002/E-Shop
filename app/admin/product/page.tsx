@@ -1,10 +1,10 @@
-import CategoryIdToName from "@/app/components/CategoryIdToName";
-import FormatCurrency from "@/app/components/FormatCurrency";
-import TextSummarizer from "@/app/components/TextSummarizer";
+import CategoryIdToName from "@/app/components/Product/CategoryIdToName";
+import FormatCurrency from "@/app/components/Product/FormatCurrency";
+import TextSummarizer from "@/app/components/Product/TextSummarizer";
 import prisma from "@/prisma/client";
 import Link from "next/link";
 import { FiEdit } from "react-icons/fi";
-import DeleteProductModale from "./DeleteProductModale";
+import DeleteProduct from "./_components/DeleteProduct";
 
 const AdminProduct = async () => {
   const Products = await prisma.product.findMany();
@@ -55,7 +55,7 @@ const AdminProduct = async () => {
                           <FiEdit />
                         </button>
                       </Link>
-                      <DeleteProductModale slug={product.slug} />
+                      <DeleteProduct slug={product.slug} />
                     </div>
                   </td>
                 </tr>

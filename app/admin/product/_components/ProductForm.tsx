@@ -50,6 +50,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       if (product) await axios.patch("/api/product/" + product.slug, data);
       else await axios.post("/api/product", data);
       router.push("/admin/product");
+      router.refresh();
     } catch (error) {
       setIsSubmiting(false);
       setError("an unexpected error occurred");

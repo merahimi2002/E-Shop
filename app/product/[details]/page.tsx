@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
-import CategoryIdToName from "../../components/CategoryIdToName";
-import FormatCurrency from "../../components/FormatCurrency";
+import CategoryIdToName from "../../components/Product/CategoryIdToName";
+import FormatCurrency from "../../components/Product/FormatCurrency";
 import ReactMarkdown from "react-markdown";
 
 interface Props {

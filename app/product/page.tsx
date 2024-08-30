@@ -1,5 +1,5 @@
 import prisma from "@/prisma/client";
-import ProductCard from "./ProductCard";
+import ProductCard from "../components/Product/ProductCard";
 
 const ProductPage = async () => {
   const Products = await prisma.product.findMany();

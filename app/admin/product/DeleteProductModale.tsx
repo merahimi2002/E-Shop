@@ -18,7 +18,7 @@ const DeleteProductModale = ({ slug }: { slug: string }) => {
     try {
       setIsDeleting(true);
       await axios.delete("/api/product/" + slug);
-      router.push("/product");
+      router.push("/admin/product");
       router.refresh();
     } catch (error) {
       setIsDeleting(false);
@@ -31,21 +31,20 @@ const DeleteProductModale = ({ slug }: { slug: string }) => {
       <button
         onClick={() => setIsModalOpen(true)}
         disabled={isDeleting}
-        className="btn btn-error w-fit text-xl px-5 my-3"
+        className="btn btn-error w-fit text-xl px-4"
       >
         <RiDeleteBin6Line />
-        Delete
         {isDeleting && (
           <span className="loading loading-spinner loading-md"></span>
         )}
       </button>
       <Modals isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="border-b-2 mb-4 border-base-200 border-opacity-15">
-          <h2 className="text-2xl font-bold mb-3 text-primary">
+          <h2 className="text-2xl font-bold mb-3 text-primary text-left">
             Confirm Deletion
           </h2>
         </div>
-        <p className="mb-4 text-lg">
+        <p className="mb-4 text-lg text-left">
           Are you sure you want to delete this product ? This action cannot be
           undone
         </p>

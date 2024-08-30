@@ -49,7 +49,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       setIsSubmiting(true);
       if (product) await axios.patch("/api/product/" + product.slug, data);
       else await axios.post("/api/product", data);
-      router.push("/product");
+      router.push("/admin/product");
     } catch (error) {
       setIsSubmiting(false);
       setError("an unexpected error occurred");

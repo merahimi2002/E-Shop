@@ -1,11 +1,8 @@
 import { notFound } from "next/navigation";
-import { FiEdit } from "react-icons/fi";
 import prisma from "@/prisma/client";
 import CategoryIdToName from "../../components/CategoryIdToName";
 import FormatCurrency from "../../components/FormatCurrency";
 import ReactMarkdown from "react-markdown";
-import Link from "next/link";
-import DeleteProductModale from "../_components/DeleteProductModale";
 
 interface Props {
   params: { details: string };
@@ -24,17 +21,6 @@ const ProductDetailsPage = async ({ params }: Props) => {
     <section>
       <div className="container">
         <div className="grid grid-cols-2 gap-6">
-          <div className="col-span-2">
-            <div className="flex gap-4">
-              <Link href={`/admin/product/update/${Products.slug}`}>
-                <button className="btn btn-primary w-fit text-xl px-5 my-3">
-                  <FiEdit />
-                  Edit
-                </button>
-              </Link>
-              <DeleteProductModale slug={Products.slug} />
-            </div>
-          </div>
           <div className="col-span-2 lg:col-span-1">
             <img
               src={Products.imageUrl}

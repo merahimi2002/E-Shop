@@ -8,6 +8,30 @@ export async function POST(request: NextResponse) {
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
+  // Check for duplicate category Title
+  const ValidationCategoryTitle = await prisma.category.findUnique({
+    where: { title: body.title },
+  });
+
+  if (ValidationCategoryTitle) {
+    return NextResponse.json(
+      { message: "Title must be unique" },
+      { status: 400 }
+    );
+  }
+
+  // Check for duplicate category Slug
+  const ValidationCategorySlug = await prisma.category.findUnique({
+    where: { slug: body.slug },
+  });
+
+  if (ValidationCategorySlug) {
+    return NextResponse.json(
+      { message: "Title must be unique." },
+      { status: 400 }
+    );
+  }
+
   const newCategory = await prisma.category.create({
     data: {
       title: body.title,

@@ -18,6 +18,36 @@ export async function PATCH(
   if (!product)
     return NextResponse.json({ error: "Invalid Product" }, { status: 404 });
 
+   // Check for duplicate Product Title
+   const ValidationProductTitle = await prisma.product.findUnique({
+    where: { title: body.title },
+  });
+
+  if (
+    ValidationProductTitle &&
+    ValidationProductTitle?.title !== product.title
+  ) {
+    return NextResponse.json(
+      { message: "Title must be unique" },
+      { status: 400 }
+    );
+  }
+
+  // Check for duplicate Product Slug
+  const ValidationProductSlug = await prisma.product.findUnique({
+    where: { slug: body.slug },
+  });
+
+  if (
+    ValidationProductSlug &&
+    ValidationProductSlug?.slug !== product.slug
+  ) {
+    return NextResponse.json(
+      { message: "Title must be unique." },
+      { status: 400 }
+    );
+  }
+
   const updatedProduct = await prisma.product.update({
     where: { slug: params.slug },
     data: {

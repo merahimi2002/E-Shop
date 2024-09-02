@@ -42,10 +42,10 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       if (category) await axios.patch("/api/category/" + category.slug, data);
       else await axios.post("/api/category", data);
       router.push("/admin/category");
-      router.refresh()
-    } catch (error) {
+      router.refresh();
+    } catch (error: any) {
       setIsSubmiting(false);
-      setError("an unexpected error occurred");
+      setError(error.response.data.message || "an unexpected error occurred");
     }
   });
   // set default value for slug

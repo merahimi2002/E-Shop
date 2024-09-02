@@ -11,12 +11,42 @@ export async function PATCH(
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
 
-  const Category = await prisma.category.findMany({
+  const Category = await prisma.category.findUnique({
     where: { slug: params.slug },
   });
 
   if (!Category)
     return NextResponse.json({ error: "Invalid Category" }, { status: 404 });
+
+  // Check for duplicate category Title
+  const ValidationCategoryTitle = await prisma.category.findUnique({
+    where: { title: body.title },
+  });
+
+  if (
+    ValidationCategoryTitle &&
+    ValidationCategoryTitle?.title !== Category.title
+  ) {
+    return NextResponse.json(
+      { message: "Title must be unique" },
+      { status: 400 }
+    );
+  }
+
+  // Check for duplicate category Slug
+  const ValidationCategorySlug = await prisma.category.findUnique({
+    where: { slug: body.slug },
+  });
+
+  if (
+    ValidationCategorySlug &&
+    ValidationCategorySlug?.slug !== Category.slug
+  ) {
+    return NextResponse.json(
+      { message: "Title must be unique." },
+      { status: 400 }
+    );
+  }
 
   const updatedCategory = await prisma.category.update({
     where: { slug: params.slug },

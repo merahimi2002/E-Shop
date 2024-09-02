@@ -8,6 +8,30 @@ export async function POST(request: NextResponse) {
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
+  // Check for duplicate Product Title
+  const ValidationProductTitle = await prisma.product.findUnique({
+    where: { title: body.title },
+  });
+
+  if (ValidationProductTitle) {
+    return NextResponse.json(
+      { message: "Title must be unique" },
+      { status: 400 }
+    );
+  }
+
+  // Check for duplicate Product Slug
+  const ValidationProductSlug = await prisma.product.findUnique({
+    where: { slug: body.slug },
+  });
+
+  if (ValidationProductSlug ) {
+    return NextResponse.json(
+      { message: "Title must be unique." },
+      { status: 400 }
+    );
+  }
+
   const newProduct = await prisma.product.create({
     data: {
       title: body.title,

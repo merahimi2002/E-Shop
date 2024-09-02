@@ -51,9 +51,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
       else await axios.post("/api/product", data);
       router.push("/admin/product");
       router.refresh();
-    } catch (error) {
+    } catch (error:any) {
       setIsSubmiting(false);
-      setError("an unexpected error occurred");
+      setError(error.response.data.message || "an unexpected error occurred");
     }
   });
   // set default value for slug
@@ -94,7 +94,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       {publicId && (
         <CldImage src={publicId} alt="pic" width={170} height={10} />
       )}
-      {publicId == "" && <ErrorMessage>{error}</ErrorMessage>}
+      {publicId == "" && <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>}
       {/* for update */}
       {product && !publicId && (
         <>

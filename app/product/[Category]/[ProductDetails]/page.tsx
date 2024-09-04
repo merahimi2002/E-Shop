@@ -1,16 +1,17 @@
 import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
-import CategoryIdToName from "../../components/Product/CategoryIdToName";
-import FormatCurrency from "../../components/Product/FormatCurrency";
+import CategoryIdToName from "@/app/components/Product/CategoryIdToName";
+import FormatCurrency from "@/app/components/Product/FormatCurrency";
 import ReactMarkdown from "react-markdown";
 
+
 interface Props {
-  params: { details: string };
+  params: { ProductDetails: string };
 }
 
 const ProductDetailsPage = async ({ params }: Props) => {
   const Products = await prisma.product.findUnique({
-    where: { slug: String(params.details) },
+    where: { slug: String(params.ProductDetails) },
   });
 
   if (!Products) {

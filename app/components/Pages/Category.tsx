@@ -1,4 +1,5 @@
 import prisma from "@/prisma/client";
+import Link from "next/link";
 
 const Category = async () => {
   const Categories = await prisma.category.findMany();
@@ -14,13 +15,15 @@ const Category = async () => {
               key={category.id}
               className="card custom-four-color translate-hover"
             >
-              <figure>
-                <img
-                  className="rounded-xl shadow-md"
-                  src={category.imageUrl}
-                  alt={category.title}
-                />
-              </figure>
+              <Link href={`product/${category.slug}`}>
+                <figure>
+                  <img
+                    className="shadow-md w-full h-64 object-contain"
+                    src={category.imageUrl}
+                    alt={category.title}
+                  />
+                </figure>
+              </Link>
             </div>
           ))}
         </div>

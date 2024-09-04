@@ -60,71 +60,73 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   // give cloudinary image
   const [publicId, setPublicId] = useState("");
   return (
-    <div className="container my-4">
-      <ErrorMessage>{error}</ErrorMessage>
-      <form onSubmit={onSubmit}>
-        <div className="flex flex-col gap-3 my-5">
-          {/* title */}
-          <label className="custom-form-input">
-            <MdDriveFileRenameOutline />
-            <input
-              type="text"
-              placeholder="Name"
-              {...register("title")}
-              defaultValue={category?.title}
-            />
-          </label>
-          <ErrorMessage>{errors.title?.message}</ErrorMessage>
-          {/* {slug} */}
-          <ErrorMessage>{errors.slug?.message}</ErrorMessage>
-          {/* imageUrl */}
-          <CldUploadWidget
-            uploadPreset="DBimage"
-            options={{
-              sources: ["local"],
-              multiple: false,
-              maxFiles: 2,
-              maxFileSize: 1000000,
-            }}
-            onSuccess={(result) => {
-              const info = result.info as CloudinaryResult;
-              setPublicId(info.public_id);
-              setValue("imageUrl", info.url);
-            }}
-          >
-            {({ open }) => (
-              <label className="custom-form-input w-fit">
-                <FaRegImage />
-                <input placeholder="Upload Image" onClick={() => open()} />
-              </label>
+    <section>
+      <div className="container">
+        <ErrorMessage>{error}</ErrorMessage>
+        <form onSubmit={onSubmit}>
+          <div className="flex flex-col gap-3 my-5">
+            {/* title */}
+            <label className="custom-form-input">
+              <MdDriveFileRenameOutline />
+              <input
+                type="text"
+                placeholder="Name"
+                {...register("title")}
+                defaultValue={category?.title}
+              />
+            </label>
+            <ErrorMessage>{errors.title?.message}</ErrorMessage>
+            {/* {slug} */}
+            <ErrorMessage>{errors.slug?.message}</ErrorMessage>
+            {/* imageUrl */}
+            <CldUploadWidget
+              uploadPreset="DBimage"
+              options={{
+                sources: ["local"],
+                multiple: false,
+                maxFiles: 2,
+                maxFileSize: 1000000,
+              }}
+              onSuccess={(result) => {
+                const info = result.info as CloudinaryResult;
+                setPublicId(info.public_id);
+                setValue("imageUrl", info.url);
+              }}
+            >
+              {({ open }) => (
+                <label className="custom-form-input w-fit">
+                  <FaRegImage />
+                  <input placeholder="Upload Image" onClick={() => open()} />
+                </label>
+              )}
+            </CldUploadWidget>
+            {publicId && (
+              <CldImage src={publicId} alt="pic" width={170} height={10} />
             )}
-          </CldUploadWidget>
-          {publicId && (
-            <CldImage src={publicId} alt="pic" width={170} height={10} />
-          )}
-          {publicId == "" && (
-            <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
-          )}
-          {/* for update */}
-          {category && !publicId && (
-            <>
-              <img width={170} height={10} src={category.imageUrl} />
-              {setValue("imageUrl", category.imageUrl)}
-            </>
-          )}
-          {/* button */}
-          <button
-            disabled={isSubmiting}
-            className="btn btn-secondary w-fit mt-5"
-          >
-            {category ? "Update Category" : "Add New Category"}
-            {isSubmiting && (
-              <span className="loading loading-spinner loading-md"></span>
+            {publicId == "" && (
+              <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
             )}
-          </button>
-        </div>
-      </form>
-    </div>
+            {/* for update */}
+            {category && !publicId && (
+              <>
+                <img width={170} height={10} src={category.imageUrl} />
+                {setValue("imageUrl", category.imageUrl)}
+              </>
+            )}
+            {/* button */}
+            <button
+              disabled={isSubmiting}
+              className="btn btn-secondary w-fit mt-5"
+            >
+              {category ? "Update Category" : "Add New Category"}
+              {isSubmiting && (
+                <span className="loading loading-spinner loading-md"></span>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 };
 

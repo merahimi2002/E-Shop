@@ -14,7 +14,7 @@ const AdminProduct = async () => {
         <div className="overflow-x-auto">
           <div className="flex gap-4 mb-5">
             <Link href="/admin/product/create">
-              <button className="btn btn-success text-base-200 w-fit text-xl px-4">
+              <button className="btn btn-success w-fit text-xl px-4 text-white">
                 New Product
               </button>
             </Link>

@@ -51,7 +51,7 @@ const ProductForm = ({ product }: { product?: Product }) => {
       else await axios.post("/api/product", data);
       router.push("/admin/product");
       router.refresh();
-    } catch (error:any) {
+    } catch (error: any) {
       setIsSubmiting(false);
       setError(error.response.data.message || "an unexpected error occurred");
     }
@@ -94,7 +94,9 @@ const ProductForm = ({ product }: { product?: Product }) => {
       {publicId && (
         <CldImage src={publicId} alt="pic" width={170} height={10} />
       )}
-      {publicId == "" && <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>}
+      {publicId == "" && (
+        <ErrorMessage>{errors.imageUrl?.message}</ErrorMessage>
+      )}
       {/* for update */}
       {product && !publicId && (
         <>
@@ -145,64 +147,66 @@ const ProductForm = ({ product }: { product?: Product }) => {
   );
 
   return (
-    <div className="container my-4">
-      <ErrorMessage>{error}</ErrorMessage>
-      <form onSubmit={onSubmit}>
-        <div className="flex flex-col gap-3 my-5">
-          {/* title */}
-          <label className="custom-form-input">
-            <MdDriveFileRenameOutline />
-            <input
-              type="text"
-              placeholder="Name"
-              defaultValue={product?.title}
-              {...register("title")}
-            />
-          </label>
-          <ErrorMessage>{errors.title?.message}</ErrorMessage>
-          {/* {slug} */}
-          <ErrorMessage>{errors.slug?.message}</ErrorMessage>
-          {/* description */}
-          <Controller
-            name="description"
-            control={control}
-            defaultValue={product?.description}
-            render={({ field }) => (
-              <SimpleMDE
-                placeholder="Description"
-                className="w-full md:w-1/3"
-                {...field}
+    <section>
+      <div className="container">
+        <ErrorMessage>{error}</ErrorMessage>
+        <form onSubmit={onSubmit}>
+          <div className="flex flex-col gap-3 my-5">
+            {/* title */}
+            <label className="custom-form-input">
+              <MdDriveFileRenameOutline />
+              <input
+                type="text"
+                placeholder="Name"
+                defaultValue={product?.title}
+                {...register("title")}
               />
-            )}
-          />
-          <ErrorMessage>{errors.description?.message}</ErrorMessage>
-          {/* imageUrl */}
-          {UploadImage}
-          {/* price*/}
-          <label className="custom-form-input">
-            <PiCoinsThin />
-            <input
-              defaultValue={product ? Number(product?.price) : ""}
-              placeholder="Price"
-              {...register("price", { valueAsNumber: true })}
+            </label>
+            <ErrorMessage>{errors.title?.message}</ErrorMessage>
+            {/* {slug} */}
+            <ErrorMessage>{errors.slug?.message}</ErrorMessage>
+            {/* description */}
+            <Controller
+              name="description"
+              control={control}
+              defaultValue={product?.description}
+              render={({ field }) => (
+                <SimpleMDE
+                  placeholder="Description"
+                  className="w-full md:w-1/3"
+                  {...field}
+                />
+              )}
             />
-          </label>
-          <ErrorMessage>{errors.price?.message}</ErrorMessage>
-          {/* category */}
-          {SelectCategory}
+            <ErrorMessage>{errors.description?.message}</ErrorMessage>
+            {/* imageUrl */}
+            {UploadImage}
+            {/* price*/}
+            <label className="custom-form-input">
+              <PiCoinsThin />
+              <input
+                defaultValue={product ? Number(product?.price) : ""}
+                placeholder="Price"
+                {...register("price", { valueAsNumber: true })}
+              />
+            </label>
+            <ErrorMessage>{errors.price?.message}</ErrorMessage>
+            {/* category */}
+            {SelectCategory}
 
-          <button
-            disabled={isSubmiting}
-            className="btn btn-secondary w-fit mt-5"
-          >
-            {product ? "Update Product" : "Add New Product"}
-            {isSubmiting && (
-              <span className="loading loading-spinner loading-md"></span>
-            )}
-          </button>
-        </div>
-      </form>
-    </div>
+            <button
+              disabled={isSubmiting}
+              className="btn btn-secondary w-fit mt-5"
+            >
+              {product ? "Update Product" : "Add New Product"}
+              {isSubmiting && (
+                <span className="loading loading-spinner loading-md"></span>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 };
 

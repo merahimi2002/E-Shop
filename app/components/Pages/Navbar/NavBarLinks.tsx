@@ -22,7 +22,7 @@ const NavBarLinks = () => {
           currentPath === "/contact" ? "text-secondary" : "lg:text-white"
         }
       >
-        <Link href="/">Contact</Link>
+        <Link href="/contact">Contact</Link>
       </li>
       <li
         className={

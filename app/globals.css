@@ -6,6 +6,9 @@
   .container {
     @apply px-7 md:px-10 2xl:p-0;
   }
+  .skeleton {
+    @apply bg-base-200 bg-opacity-10
+  }
 
   .flex-center {
     @apply flex flex-col justify-center items-center;

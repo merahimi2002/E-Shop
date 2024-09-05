@@ -72,7 +72,7 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
                       we're more than just a computer equipment store <br></br>{" "}
                       we're your technology partners
                     </p>
-                    <Link href="/about" className="read-more">
+                    <Link href="/pages/about" className="read-more">
                       Read More{" "}
                       <IoMdArrowRoundForward className="mt-1" size="23" />
                     </Link>

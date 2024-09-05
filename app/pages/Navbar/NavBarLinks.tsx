@@ -27,8 +27,8 @@ const NavBarLinksDynamic = async ({ href, label }: NavBarLinksDynamicProps) => {
 const NavBarLinks = () => {
   const Links = [
     { href: "/", label: "Home", flag: false },
-    { href: "/about", label: "About", flag: false },
-    { href: "/contact", label: "Contact", flag: false },
+    { href: "/pages/about", label: "About", flag: false },
+    { href: "/pages/contact", label: "Contact", flag: false },
     { href: "/product", label: "Product", flag: true },
   ];
 

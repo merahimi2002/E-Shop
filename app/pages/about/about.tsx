@@ -78,9 +78,9 @@ export const About = () => {
 
             <Link
               className={
-                currentPath === "/about" ? "hidden" : "read-more mt-5 2xl:mt-10"
+                currentPath === "/pages/about" ? "hidden" : "read-more mt-5 2xl:mt-10"
               }
-              href="/about"
+              href="pages/about"
             >
               Read More <IoMdArrowRoundForward className="mt-1" size="23" />
             </Link>

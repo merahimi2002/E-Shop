@@ -39,11 +39,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center leading-10 text-lg text-white translate-hover-x w-fit">
                 <MdDoubleArrow className="text-secondary text-3xl pr-3" />
-                <Link href="/about">About</Link>
+                <Link href="/pages/about">About</Link>
               </li>
               <li className="flex items-center leading-10 text-lg text-white translate-hover-x w-fit">
                 <MdDoubleArrow className="text-secondary text-3xl pr-3" />
-                <Link href="/contact">Contact</Link>
+                <Link href="/pages/contact">Contact</Link>
               </li>
               <li className="flex items-center leading-10 text-lg text-white translate-hover-x w-fit">
                 <MdDoubleArrow className="text-secondary text-3xl pr-3" />

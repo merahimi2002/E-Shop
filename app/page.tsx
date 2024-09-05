@@ -1,6 +1,6 @@
-import { About } from "./about/about";
+import { About } from "./pages/about/about";
 import CarouselSlider from "./components/CarouselSlider";
-import Category from "./components/Pages/Category";
+import Category from "./pages/Category";
 
 export default function Home() {
   const Sliders = [

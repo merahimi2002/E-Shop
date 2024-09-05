@@ -35,7 +35,7 @@ const NavBarLinks = () => {
   return (
     <>
       {Links.map((link) => (
-        <li className="text-white" key={link.href}>
+        <li className="text-white before:absolute before:bottom-0 before:left-4 before:w-8 before:border-b-2 before:border-secondary before:rounded-full before:duration-300 before:hover:w-3/5" key={link.href}>
           {link.flag ? (
             <NavBarLinksDynamic href={link.href} label={link.label} />
           ) : (

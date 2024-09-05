@@ -68,7 +68,7 @@ const CarouselSlider = ({ images }: CarouselSliderProps) => {
                       <span className="text-secondary">Electro </span>
                       Shop
                     </h1>
-                    <p className="text-xl  text-center my-10">
+                    <p className="text-xl text-base-200 text-center my-10">
                       we're more than just a computer equipment store <br></br>{" "}
                       we're your technology partners
                     </p>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CategoryIdToName from "./CategoryIdToName";
-import TextSummarizer from "@/app/components/Product/TextSummarizer";
+import TextSummarizer from "@/app/product/_components/TextSummarizer";
 import FormatCurrency from "./FormatCurrency";
 
 interface ProductCardProps {

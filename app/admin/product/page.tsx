@@ -2,9 +2,9 @@ import { FiEdit } from "react-icons/fi";
 import Link from "next/link";
 import prisma from "@/prisma/client";
 import DeleteProduct from "./_components/DeleteProduct";
-import CategoryIdToName from "@/app/components/Product/CategoryIdToName";
-import FormatCurrency from "@/app/components/Product/FormatCurrency";
-import TextSummarizer from "@/app/components/Product/TextSummarizer";
+import CategoryIdToName from "@/app/product/_components/CategoryIdToName";
+import FormatCurrency from "@/app/product/_components/FormatCurrency";
+import TextSummarizer from "@/app/product/_components/TextSummarizer";
 
 const AdminProduct = async () => {
   const Products = await prisma.product.findMany();

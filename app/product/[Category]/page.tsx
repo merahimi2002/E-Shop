@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
-import ProductCard from "@/app/components/Product/ProductCard";
+import ProductCard from "@/app/product/_components/ProductCard";
 
 interface Props {
   params: { Category: string };

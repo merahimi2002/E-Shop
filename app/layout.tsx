@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import AuthProvider from "./auth/Provider";
 import Footer from "./pages/Footer";
 import NavBar from "./pages/Navbar/NavBar";
 import "./globals.css";
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
-        <main>{children}</main>
-        <Footer />
+        <AuthProvider>
+          <NavBar />
+          <main>{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

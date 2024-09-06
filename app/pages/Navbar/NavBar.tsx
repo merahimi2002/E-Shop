@@ -1,9 +1,9 @@
-import { RiMenu2Fill, RiAdminLine } from "react-icons/ri";
+import { RiMenu2Fill } from "react-icons/ri";
 import Logo from "@/public/image/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import NavBarLinks from "./NavBarLinks";
-import ThemeController from "./ThemeController";
+import NavBarAction from "./NavBarAction";
 
 const NavBar = () => {
   return (
@@ -36,12 +36,7 @@ const NavBar = () => {
             </ul>
           </div>
           <div className="navbar-end">
-            <div className="flex gap-4 justify-center items-center">
-              <Link href="/admin">
-                <RiAdminLine className="text-white h-8 w-8" />
-              </Link>
-              <ThemeController />
-            </div>
+            <NavBarAction />
           </div>
         </div>
       </div>

@@ -29,7 +29,7 @@ const ProductCard = ({
       className={`card border-2 border-primary overflow-hidden`}
       key={id}
     >
-      <img className="w-full h-60 object-contain" src={imageUrl} alt={title} />
+      <img className="w-full h-60 object-contain p-5" src={imageUrl} alt={title} />
       <div className="card-body">
         <div className="card-title text-2xl text-secondary font-bold pb-4">
           <Link href={`/product/${categorySlug}/${slug}`}>

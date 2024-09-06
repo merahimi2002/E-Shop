@@ -40,7 +40,9 @@ const AdminProduct = async () => {
                       className="object-cover w-10 h-10 m-auto"
                     />
                   </td>
-                  <td>{product.title}</td>
+                  <td>
+                    <TextSummarizer text={product.title} maxChars={20} />
+                  </td>
                   <td>
                     <TextSummarizer text={product.description} maxChars={10} />
                   </td>

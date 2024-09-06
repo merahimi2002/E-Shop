@@ -34,7 +34,6 @@ const CategoryFilterPage = async ({ params }: Props) => {
               description={product.description}
               imageUrl={product.imageUrl}
               price={product.price}
-              categoryId={product.categoryId}
               categorySlug={Category.slug}
             />
           ))}

@@ -10,6 +10,7 @@ import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { BsFillEnvelopeAtFill, BsPhoneFill } from "react-icons/bs";
 import { BiSolidLock } from "react-icons/bi";
 import { FaUser, FaAddressCard, FaRegImage } from "react-icons/fa";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 
@@ -48,7 +49,6 @@ const UserForm = () => {
 
   // UploadImage to Cloudinary
   const [publicId, setPublicId] = useState("");
-
   const UploadImage = (
     <>
       <CldUploadWidget
@@ -78,6 +78,9 @@ const UserForm = () => {
       {publicId == "" && <ErrorMessage>{errors.image?.message}</ErrorMessage>}
     </>
   );
+  // password
+  const [password, setPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(false);
   return (
     <section>
       <div className="container">
@@ -129,24 +132,45 @@ const UserForm = () => {
             {/* image */}
             {UploadImage}
             {/* Password */}
-            <label className="custom-form-input">
-              <BiSolidLock />
-              <input
-                type="password"
-                placeholder="Password"
-                {...register("password")}
-              />
+            <label className="custom-form-input justify-between">
+              <div className="flex flex-center flex-row gap-2 ">
+                <BiSolidLock />
+                <input
+                  type={password ? "text" : "password"}
+                  placeholder="Password"
+                  {...register("password")}
+                />
+              </div>
+              <button
+                onClick={() =>
+                  password ? setPassword(false) : setPassword(true)
+                }
+                type="button"
+              >
+                {password ? <FiEyeOff /> : <FiEye />}
+              </button>
             </label>
-
             <ErrorMessage>{errors.password?.message}</ErrorMessage>
             {/* Confirm Password */}
-            <label className="custom-form-input">
-              <BiSolidLock />
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                {...register("confirmPassword")}
-              />
+            <label className="custom-form-input justify-between">
+              <div className="flex flex-center flex-row gap-2 ">
+                <BiSolidLock />
+                <input
+                  type={confirmPassword ? "text" : "password"}
+                  placeholder="Confirm Password"
+                  {...register("confirmPassword")}
+                />
+              </div>
+              <button
+                onClick={() =>
+                  confirmPassword
+                    ? setConfirmPassword(false)
+                    : setConfirmPassword(true)
+                }
+                type="button"
+              >
+                {confirmPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
             </label>
             <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
             {/* button */}

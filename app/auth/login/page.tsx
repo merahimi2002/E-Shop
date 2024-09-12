@@ -6,6 +6,7 @@ import { useState } from "react";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { IoIosLock } from "react-icons/io";
 import { FaUserLarge } from "react-icons/fa6";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { signIn } from "next-auth/react";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Link from "next/link";
@@ -14,6 +15,7 @@ const LoginPage = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
   const [error, setError] = useState("");
+  const [password, setPassword] = useState(false);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -57,13 +59,23 @@ const LoginPage = () => {
                     />
                   </label>
                   {/* Password */}
-                  <label className="custom-form-input w-full">
-                    <IoIosLock size={20} />
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      {...register("password")}
-                    />
+                  <label className="custom-form-input w-full justify-between">
+                    <div className="flex flex-center flex-row gap-2">
+                      <IoIosLock size={20} />
+                      <input
+                        type={password ? "text" : "password"}
+                        placeholder="Password"
+                        {...register("password")}
+                      />
+                    </div>
+                    <button
+                      onClick={() =>
+                        password ? setPassword(false) : setPassword(true)
+                      }
+                      type="button"
+                    >
+                      {password ? <FiEyeOff /> : <FiEye />}
+                    </button>
                   </label>
                   {/* general error */}
                   <div className="-mb-7 mt-4">
@@ -73,7 +85,10 @@ const LoginPage = () => {
                   <button className="text-xl read-more w-full mt-5 rounded-lg">
                     Login
                   </button>
-                  <p className="text-center mt-4">Don't have an account yet ? <Link href="/admin/user/create">Sign Up</Link></p>
+                  <p className="text-center mt-4">
+                    Don't have an account yet ?{" "}
+                    <Link href="/admin/user/create">Sign Up</Link>
+                  </p>
                 </div>
               </form>
             </div>

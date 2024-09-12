@@ -34,7 +34,7 @@ const LoginPage = () => {
 
   return (
     <section>
-      <div className="container">
+      <div className="container flex flex-center">
         <div className="flex flex-center m-auto w-full md:w-2/3  border-solid border-primary border-2 rounded-lg overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <img
@@ -70,7 +70,7 @@ const LoginPage = () => {
                     <ErrorMessage>{error}</ErrorMessage>
                   </div>
                   {/* button */}
-                  <button className="btn btn-secondary w-full mt-5">
+                  <button className="text-xl read-more w-full mt-5 rounded-lg">
                     Login
                   </button>
                   <p className="text-center mt-4">Don't have an account yet ? <Link href="/">Sign Up</Link></p>

@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { SignInSchema } from "../validation/validationSchema";
+import { UserSchema } from "../validation/validationSchema";
 import prisma from "@/prisma/client";
 import bcrypt from "bcrypt";
 
 export async function POST(request: NextResponse) {
   const body = await request.json();
-  const validation = SignInSchema.safeParse(body);
+  const validation = UserSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
@@ -15,7 +15,7 @@ export async function POST(request: NextResponse) {
   });
 
   if (unValidUser) {
-    return NextResponse.json({ error: "User already exists" }, { status: 400 });
+    return NextResponse.json({ message: "User already exists" }, { status: 400 });
   }
 
   const hashedPassword = await bcrypt.hash(body.password, 10);
@@ -24,6 +24,12 @@ export async function POST(request: NextResponse) {
     data: {
       email: body.email,
       hashedPassword,
+      firstName: body.firstName,
+      lastName: body.lastName,
+      address: body.address,
+      phone: body.phone,
+      image: body.image,
+      role: body.role,
     },
   });
 

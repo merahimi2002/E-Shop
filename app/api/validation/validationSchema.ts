@@ -31,19 +31,35 @@ export const CategorySchema = z.object({
   imageUrl: z.string().min(1, "Image is required").max(255),
 });
 
-export const SignInSchema = z.object({
-  email: z.string().email().min(1, "Email is required"),
-  password: z
-    .string()
-    .min(8, "Password must be at least 8 characters long")
-    .regex(/[A-Z]/, {
-      message: "Password must contain at least one uppercase letter",
-    })
-    .regex(/[a-z]/, {
-      message: "Password must contain at least one lowercase letter",
-    })
-    .regex(/[0-9]/, { message: "Password must contain at least one number" })
-    .regex(/[\/\?:@&=\+\$_.!~*'()#]/, {
-      message: "Password must contain at least one special character",
-    }),
-});
+export const UserSchema = z
+  .object({
+    email: z.string().email().min(1, "Email is required"),
+    firstName: z.string().optional(),
+    lastName: z.string().optional(),
+    address: z.string().optional(),
+    phone: z
+      .string()
+      .min(11, "Phone number is 11 character")
+      .optional()
+      .or(z.literal("")),
+    image: z.string().optional(),
+    role: z.string().optional(),
+    confirmPassword: z.string(),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .regex(/[A-Z]/, {
+        message: "Password must contain at least one uppercase letter",
+      })
+      .regex(/[a-z]/, {
+        message: "Password must contain at least one lowercase letter",
+      })
+      .regex(/[0-9]/, { message: "Password must contain at least one number" })
+      .regex(/[\/\?:@&=\+\$_.!~*'()#]/, {
+        message: "Password must contain at least one special character",
+      }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"], 
+    message: "Passwords do not match",
+  });

@@ -25,6 +25,9 @@ const AdminPage = () => {
           <li>
             <Link href="/admin/category">Category</Link>
           </li>
+          <li>
+            <Link href="/admin/user">User</Link>
+          </li>
         </ul>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { FaUser } from "react-icons/fa";
+import DeleteUser from "./DeleteUser";
 import prisma from "@/prisma/client";
 
 const AdminUser = async () => {
@@ -37,7 +38,7 @@ const AdminUser = async () => {
                   <td>{user.email}</td>
                   <td>
                     <div className="flex justify-center items-center gap-4">
-                      {/* <DeleteCategory slug={category.slug} /> */}
+                      <DeleteUser email={user.email}  />
                     </div>
                   </td>
                 </tr>

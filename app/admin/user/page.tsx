@@ -13,6 +13,7 @@ const AdminUser = async () => {
               <tr className="text-center">
                 <th>User</th>
                 <th>Name</th>
+                <th>Role</th>
                 <th>Email</th>
                 <th>Delete</th>
               </tr>
@@ -34,6 +35,9 @@ const AdminUser = async () => {
                     {user.firstName || user.lastName
                       ? user.firstName + " " + user.lastName
                       : "-"}
+                  </td>
+                  <td>
+                    {user.role}
                   </td>
                   <td>{user.email}</td>
                   <td>

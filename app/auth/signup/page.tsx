@@ -21,7 +21,7 @@ interface CloudinaryResult {
   url: string;
 }
 
-const UserForm = () => {
+const SignUp = () => {
   const {
     register,
     handleSubmit,
@@ -190,4 +190,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default SignUp;

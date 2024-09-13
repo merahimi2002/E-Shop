@@ -7,7 +7,7 @@ import { IoPersonCircleOutline } from "react-icons/io5";
 import { IoIosLock } from "react-icons/io";
 import { FaUserLarge } from "react-icons/fa6";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import Link from "next/link";
 
@@ -16,6 +16,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [password, setPassword] = useState(false);
+  const { status, data: session } = useSession();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -55,6 +56,7 @@ const LoginPage = () => {
                     <input
                       type="email"
                       placeholder="Email"
+                      defaultValue={status === "authenticated" ? session.user?.email ?? "" : ""}
                       {...register("email")}
                     />
                   </label>

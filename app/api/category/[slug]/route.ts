@@ -34,8 +34,9 @@ export async function PATCH(
   }
 
   // Check for duplicate category Slug
+  const Slug = body.title.toLowerCase().replace(/\s+/g, "-");
   const ValidationCategorySlug = await prisma.category.findUnique({
-    where: { slug: body.slug },
+    where: { slug: Slug},
   });
 
   if (
@@ -52,7 +53,7 @@ export async function PATCH(
     where: { slug: params.slug },
     data: {
       title: body.title,
-      slug: body.slug,
+      slug: Slug ,
       imageUrl: body.imageUrl,
     },
   });

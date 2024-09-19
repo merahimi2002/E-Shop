@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CategorySchema } from "@/app/api/validation/validationSchema";
 import { Category } from "@prisma/client";
@@ -25,7 +25,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<CategoryFormProps>({
@@ -48,14 +47,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
       setError(error.response.data.message || "an unexpected error occurred");
     }
   });
-  // set default value for slug
-  const titleValue = watch("title");
-  useEffect(() => {
-    if (titleValue) {
-      const slug = titleValue.toLowerCase().replace(/\s+/g, "-");
-      setValue("slug", slug);
-    }
-  }, [titleValue, setValue]);
 
   // give cloudinary image
   const [publicId, setPublicId] = useState("");
@@ -76,8 +67,6 @@ const CategoryForm = ({ category }: { category?: Category }) => {
               />
             </label>
             <ErrorMessage>{errors.title?.message}</ErrorMessage>
-            {/* {slug} */}
-            <ErrorMessage>{errors.slug?.message}</ErrorMessage>
             {/* imageUrl */}
             <CldUploadWidget
               uploadPreset="DBimage"

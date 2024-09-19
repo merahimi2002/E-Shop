@@ -21,8 +21,9 @@ export async function POST(request: NextResponse) {
   }
 
   // Check for duplicate Product Slug
+  const Slug = body.title.toLowerCase().replace(/\s+/g, "-");
   const ValidationProductSlug = await prisma.product.findUnique({
-    where: { slug: body.slug },
+    where: { slug: Slug },
   });
 
   if (ValidationProductSlug ) {
@@ -35,7 +36,7 @@ export async function POST(request: NextResponse) {
   const newProduct = await prisma.product.create({
     data: {
       title: body.title,
-      slug:body.slug,
+      slug:Slug,
       description: body.description,
       imageUrl: body.imageUrl,
       price: body.price,

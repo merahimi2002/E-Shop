@@ -32,7 +32,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
   const {
     register,
     control,
-    watch,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -56,15 +55,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
       setError(error.response.data.message || "an unexpected error occurred");
     }
   });
-  // set default value for slug
-  const titleValue = watch("title");
-  useEffect(() => {
-    if (titleValue) {
-      const slug = titleValue.toLowerCase().replace(/\s+/g, "-");
-      setValue("slug", slug);
-    }
-  }, [titleValue, setValue]);
-
   // UploadImage to Cloudinary
   const [publicId, setPublicId] = useState("");
 
@@ -163,8 +153,6 @@ const ProductForm = ({ product }: { product?: Product }) => {
               />
             </label>
             <ErrorMessage>{errors.title?.message}</ErrorMessage>
-            {/* {slug} */}
-            <ErrorMessage>{errors.slug?.message}</ErrorMessage>
             {/* description */}
             <Controller
               name="description"

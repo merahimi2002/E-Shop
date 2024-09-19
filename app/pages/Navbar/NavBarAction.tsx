@@ -58,7 +58,7 @@ const NavBarAction = () => {
                 </div>
               </li>
               <li>
-                <Link href="/auth/signup">
+                <Link href="/auth/signup/edit">
                   <FiEdit className="text-secondary text-xl" />
                   <h2 className="text-base-200 text-base">Edit</h2>
                 </Link>

@@ -32,17 +32,15 @@ const AdminUser = async () => {
                     )}
                   </td>
                   <td>
-                    {user.firstName || user.lastName
-                      ? user.firstName + " " + user.lastName
-                      : "-"}
+                    {user.firstName && user.lastName
+                      ? `${user.firstName} ${user.lastName}`
+                      : user.firstName || user.lastName || "-"}
                   </td>
-                  <td>
-                    {user.role}
-                  </td>
+                  <td>{user.role}</td>
                   <td>{user.email}</td>
                   <td>
                     <div className="flex justify-center items-center gap-4">
-                      <DeleteUser email={user.email}  />
+                      <DeleteUser email={user.email} />
                     </div>
                   </td>
                 </tr>

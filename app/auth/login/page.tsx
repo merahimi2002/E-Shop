@@ -89,7 +89,7 @@ const LoginPage = () => {
                   </button>
                   <p className="text-center mt-4">
                     Don't have an account yet ?{" "}
-                    <Link href="/admin/user/create">Sign Up</Link>
+                    <Link href="/auth/signup">Sign Up</Link>
                   </p>
                 </div>
               </form>

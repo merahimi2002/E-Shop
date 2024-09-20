@@ -43,7 +43,8 @@ const SignUpForm = ({ user }: { user?: User }) => {
       setIsSubmiting(true);
       if (user) await axios.patch("/api/user/" + user.email, data);
       else await axios.post("/api/user", data);
-      router.push("/");
+      if (user) router.push("/");
+      else router.push("/auth/login");
       router.refresh();
     } catch (error: any) {
       setIsSubmiting(false);
@@ -105,7 +106,6 @@ const SignUpForm = ({ user }: { user?: User }) => {
             <FaUserPlus className="text-6xl text-primary m-auto" />
             <h2 className="text-3xl text-primary font-semibold">Sign Up</h2>
           </div>
-          <ErrorMessage>{error}</ErrorMessage>
           <form className="w-full" onSubmit={onSubmit}>
             <div className="flex flex-col gap-3 my-5">
               {/* Email */}
@@ -255,6 +255,7 @@ const SignUpForm = ({ user }: { user?: User }) => {
               </button>
             </div>
           </form>
+          <ErrorMessage>{error}</ErrorMessage>
         </div>
       </div>
     </section>

@@ -14,7 +14,7 @@ const DeleteUser = ({ email }: { email: string }) => {
   const [error, setError] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
-  const { status, data: session } = useSession();
+  const { data: session } = useSession();
 
   const DeleteUser = async () => {
     try {

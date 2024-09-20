@@ -96,6 +96,7 @@ const SignUpForm = ({ user }: { user?: User }) => {
   // password
   const [password, setPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState(false);
+  const [oldPassword, setOldPassword] = useState(false);
   return (
     <section>
       <div className="container">
@@ -168,6 +169,32 @@ const SignUpForm = ({ user }: { user?: User }) => {
               <ErrorMessage>{errors.phone?.message}</ErrorMessage>
               {/* image */}
               {UploadImage}
+              {/* old password for update */}
+              {user ? (
+                <label className="custom-form-input w-full text-base-200 justify-between">
+                  <div className="flex flex-center flex-row gap-2 ">
+                    <BiSolidLock className="text-secondary text-xl" />
+                    <input
+                      type={oldPassword ? "text" : "password"}
+                      placeholder={"Old Password"}
+                      {...register("oldPassword")}
+                    />
+                  </div>
+                  <div className="flex flex-center flex-row gap-3">
+                    <button
+                      onClick={() =>
+                        oldPassword
+                          ? setOldPassword(false)
+                          : setOldPassword(true)
+                      }
+                      type="button"
+                    >
+                      {password ? <FiEyeOff /> : <FiEye />}
+                    </button>
+                    <FaStarOfLife className="text-secondary text-xs" />
+                  </div>
+                </label>
+              ) : null}
               {/* Password */}
               <label className="custom-form-input w-full text-base-200 justify-between">
                 <div className="flex flex-center flex-row gap-2 ">

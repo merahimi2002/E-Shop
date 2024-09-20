@@ -28,6 +28,18 @@ export async function PATCH(
     return NextResponse.json({ message: "Access Denied" }, { status: 400 });
   }
 
+  // Check Password
+  const passwordsMatch = await bcrypt.compare(
+    body.oldPassword,
+    User.hashedPassword
+  );
+
+  if (!passwordsMatch)
+    return NextResponse.json(
+      { message: "Old Password doesnt match" },
+      { status: 400 }
+    );
+
   const hashedPassword = await bcrypt.hash(body.password, 10);
 
   const updatedUser = await prisma.user.update({

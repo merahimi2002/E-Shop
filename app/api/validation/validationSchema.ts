@@ -42,6 +42,7 @@ export const UserSchema = z
       .or(z.literal("")),
     image: z.string().optional(),
     role: z.string().optional(),
+    oldPassword: z.string().optional(),
     confirmPassword: z.string(),
     password: z
       .string()

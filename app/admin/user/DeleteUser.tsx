@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdError } from "react-icons/md";
@@ -13,11 +14,13 @@ const DeleteUser = ({ email }: { email: string }) => {
   const [error, setError] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
+  const { status, data: session } = useSession();
 
   const DeleteUser = async () => {
     try {
       setIsDeleting(true);
       await axios.delete("/api/user/" + email);
+      if (session?.user?.email === email) await signOut();
       router.push("/admin/user");
       router.refresh();
     } catch (error) {
@@ -45,8 +48,8 @@ const DeleteUser = ({ email }: { email: string }) => {
           </h2>
         </div>
         <p className="mb-4 text-lg text-left">
-          Are you sure you want to delete this User ? This action remove this User and cannot be
-          undone .
+          Are you sure you want to delete this User ? This action remove this
+          User and cannot be undone .
         </p>
         <div className="flex gap-4">
           <button

@@ -6,7 +6,9 @@ import { GrUserAdmin } from "react-icons/gr";
 import { FaUser } from "react-icons/fa";
 import DeleteUser from "./_components/DeleteUser";
 import MakeUserAdmin from "./_components/MakeUserAdmin";
+import MakeAdminUser from "./_components/MakeAdminUser";
 import prisma from "@/prisma/client";
+
 
 const AdminUser = async () => {
   const Users = await prisma.user.findMany({
@@ -67,7 +69,7 @@ const AdminUser = async () => {
                       <div className="">
                         {account?.role === "OWNER" ? (
                           <div className="flex justify-center items-center gap-4">
-                            <GrUserAdmin className="text-success text-3xl font-semibold mx-3" />
+                            <MakeAdminUser email={user.email}/>
                             <DeleteUser email={user.email} />
                           </div>
                         ) : (

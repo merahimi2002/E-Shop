@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { GrUserAdmin } from "react-icons/gr";
+import { BsPersonFillX } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { MdError } from "react-icons/md";
 import Modals from "@/app/components/Modals";
 import axios from "axios";
 
-const MakeUserAdmin = ({ email }: { email: string }) => {
+const MakeAdminUser = ({ email }: { email: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -17,7 +17,7 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
   const AdminUser = async () => {
     try {
       setIsAdmin(true);
-      await axios.patch("/api/user/admin/" + email, { role: "ADMIN" });
+      await axios.patch("/api/user/admin/" + email, { role: "USER" });
       setIsModalOpen(false);
       setIsAdmin(false);
       router.push("/admin/user");
@@ -33,9 +33,9 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
       <button
         onClick={() => setIsModalOpen(true)}
         disabled={isAdmin}
-        className="btn btn-success text-white w-fit text-xl px-4"
+        className="btn btn-error text-white w-fit text-xl px-4"
       >
-        <GrUserAdmin />
+        <BsPersonFillX />
         {isAdmin && (
           <span className="loading loading-spinner loading-md"></span>
         )}
@@ -47,8 +47,8 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
           </h2>
         </div>
         <p className="mb-4 text-lg text-left">
-          Are you sure you want to make this user an admin ? This action cannot be
-          undone .
+          Are you sure you want to Demote this admin to a user ? This action cannot
+          be undone .
         </p>
         <div className="flex gap-4">
           <button
@@ -60,7 +60,7 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
           <button
             onClick={AdminUser}
             disabled={error}
-            className="btn btn-success text-white"
+            className="btn btn-error text-white"
           >
             Yes
           </button>
@@ -68,7 +68,7 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
         {error && (
           <div role="alert" className="alert alert-error mt-5">
             <MdError size={30} />
-            <span>This User cannot be an admin .</span>
+            <span>This Admin cannot be a User .</span>
             <button
               onClick={() => setError(false)}
               className="btn btn-error btn-sm px-4"
@@ -82,4 +82,4 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
   );
 };
 
-export default MakeUserAdmin;
+export default MakeAdminUser;

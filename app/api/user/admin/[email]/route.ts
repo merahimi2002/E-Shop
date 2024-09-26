@@ -5,6 +5,7 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { email: string } }
 ) {
+  const body = await request.json();
   const User = await prisma.user.findUnique({
     where: { email: params.email },
   });
@@ -15,7 +16,7 @@ export async function PATCH(
   const updatedUser = await prisma.user.update({
     where: { email: params.email },
     data: {
-      role: "ADMIN",
+      role: body.role,
     },
   });
 

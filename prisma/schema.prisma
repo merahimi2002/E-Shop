@@ -45,7 +45,8 @@ model User {
 }
 
 enum Role {
-  USER
+  OWNER
   ADMIN
   ADDPRODUCT
+  USER
 }

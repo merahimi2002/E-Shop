@@ -1,11 +1,28 @@
-import { FaUser } from "react-icons/fa";
+import { notFound } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { FcManager } from "react-icons/fc";
 import { GrUserAdmin } from "react-icons/gr";
+import { FaUser } from "react-icons/fa";
 import DeleteUser from "./_components/DeleteUser";
 import MakeUserAdmin from "./_components/MakeUserAdmin";
 import prisma from "@/prisma/client";
 
 const AdminUser = async () => {
-  const Users = await prisma.user.findMany();
+  const Users = await prisma.user.findMany({
+    orderBy: {
+      role: "asc",
+    },
+  });
+
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    notFound();
+  }
+  const account = await prisma.user.findUnique({
+    where: { email: session?.user?.email! },
+  });
+
   return (
     <section>
       <div className="container">
@@ -38,17 +55,34 @@ const AdminUser = async () => {
                       ? `${user.firstName} ${user.lastName}`
                       : user.firstName || user.lastName || "-"}
                   </td>
-                  <td>{user.role}</td>
                   <td>{user.email}</td>
+                  <td>{user.role}</td>
                   <td>
-                    <div className="flex justify-center items-center gap-4">
-                      {user.role === "ADMIN" ? (
-                        <GrUserAdmin className="text-success text-2xl" />
-                      ) : (
+                    {user.role === "OWNER" ? (
+                      <div className="flex justify-center items-center gap-4">
+                        <FcManager className="text-5xl mx-4" />
+                      </div>
+                    ) : null}
+                    {user.role === "ADMIN" ? (
+                      <div className="">
+                        {account?.role === "OWNER" ? (
+                          <div className="flex justify-center items-center gap-4">
+                            <GrUserAdmin className="text-success text-3xl font-semibold mx-3" />
+                            <DeleteUser email={user.email} />
+                          </div>
+                        ) : (
+                          <div className="flex justify-center items-center gap-4">
+                            <GrUserAdmin className="text-success text-4xl font-semibold mx-3" />
+                          </div>
+                        )}
+                      </div>
+                    ) : null}
+                    {user.role === "USER" ? (
+                      <div className="flex justify-center items-center gap-4">
                         <MakeUserAdmin email={user.email} />
-                      )}
-                      <DeleteUser email={user.email} />
-                    </div>
+                        <DeleteUser email={user.email} />
+                      </div>
+                    ) : null}
                   </td>
                 </tr>
               ))}

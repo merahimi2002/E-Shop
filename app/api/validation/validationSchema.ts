@@ -59,6 +59,12 @@ export const UserSchema = z
       }),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    path: ["confirmPassword"], 
+    path: ["confirmPassword"],
     message: "Passwords do not match",
   });
+
+export const TwoStepVerificationSchema = z.object({
+  UserEmail: z.string().email().min(1, "Email is required"),
+  UserName : z.string().optional(),
+  VerificationCode: z.string().min(1, "Code is required"),
+});

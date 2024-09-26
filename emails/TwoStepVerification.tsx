@@ -26,7 +26,7 @@ const TwoStepVerifivationEmail = ({
               <strong className="text-[#d90077]"> Electro</strong> Shop
             </h1>
             <hr className="border-[#4c00b0]" />
-            <h2 className="border-t-2 border-[#4c00b0]">Hi {name}</h2>
+            <h2 className="border-t-2 border-[#4c00b0]">Hi Dear {name}</h2>
             <p className="text-xl">
               To complete your sign-in, please enter the verification code
               below:

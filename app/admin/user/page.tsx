@@ -1,5 +1,7 @@
 import { FaUser } from "react-icons/fa";
-import DeleteUser from "./DeleteUser";
+import { GrUserAdmin } from "react-icons/gr";
+import DeleteUser from "./_components/DeleteUser";
+import MakeUserAdmin from "./_components/MakeUserAdmin";
 import prisma from "@/prisma/client";
 
 const AdminUser = async () => {
@@ -15,7 +17,7 @@ const AdminUser = async () => {
                 <th>Name</th>
                 <th>Role</th>
                 <th>Email</th>
-                <th>Delete</th>
+                <th>Manage</th>
               </tr>
             </thead>
             <tbody>
@@ -40,6 +42,11 @@ const AdminUser = async () => {
                   <td>{user.email}</td>
                   <td>
                     <div className="flex justify-center items-center gap-4">
+                      {user.role === "ADMIN" ? (
+                        <GrUserAdmin className="text-success text-2xl" />
+                      ) : (
+                        <MakeUserAdmin email={user.email} />
+                      )}
                       <DeleteUser email={user.email} />
                     </div>
                   </td>

@@ -11,13 +11,13 @@ import { z } from "zod";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { BsFillEnvelopeAtFill, BsPhoneFill } from "react-icons/bs";
 import { BiSolidLock } from "react-icons/bi";
-import { FaUser, FaAddressCard, FaRegImage } from "react-icons/fa";
+import { FaUser, FaAddressCard, FaRegImage, FaKey } from "react-icons/fa";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { FaUserPlus } from "react-icons/fa6";
 import { FaStarOfLife } from "react-icons/fa";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
-
+import Link from "next/link";
 
 type CategoryFormProps = z.infer<typeof UpdateUserSchema>;
 
@@ -200,17 +200,26 @@ const SignUpEditeForm = ({ user }: { user: User }) => {
                   <FaStarOfLife className="text-secondary text-xs" />
                 </div>
               </label>
-              
+
               {/* button */}
-              <button
-                disabled={isSubmiting}
-                className="btn btn-secondary w-fit mt-5 px-8 text-xl"
-              >
-                Update
-                {isSubmiting && (
-                  <span className="loading loading-spinner loading-md"></span>
-                )}
-              </button>
+              <div className="flex items-center justify-between">
+                <button
+                  disabled={isSubmiting}
+                  className="btn btn-secondary w-fit mt-5 px-8 text-xl"
+                >
+                  Update
+                  {isSubmiting && (
+                    <span className="loading loading-spinner loading-md"></span>
+                  )}
+                </button>
+                <Link
+                  className="btn btn-success text-white w-fit mt-5 px-8 text-lg"
+                  href="/auth/signup/edit/password"
+                >
+                  <FaKey />
+                  Change Password
+                </Link>
+              </div>
             </div>
           </form>
           <ErrorMessage>{error}</ErrorMessage>

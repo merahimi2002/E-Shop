@@ -77,6 +77,30 @@ export const UpdateUserSchema = z.object({
   Password: z.string(),
 });
 
+export const ChangePasswordUserSchema = z
+  .object({
+    email: z.string().email().min(1, "Email is required"),
+    oldPassword: z.string(),
+    confirmPassword: z.string(),
+    newPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters long")
+      .regex(/[A-Z]/, {
+        message: "Password must contain at least one uppercase letter",
+      })
+      .regex(/[a-z]/, {
+        message: "Password must contain at least one lowercase letter",
+      })
+      .regex(/[0-9]/, { message: "Password must contain at least one number" })
+      .regex(/[\/\?:@&=\+\$_.!~*'()#]/, {
+        message: "Password must contain at least one special character",
+      }),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "New Passwords do not match",
+  });
+
 export const TwoStepVerificationSchema = z.object({
   UserEmail: z.string().email().min(1, "Email is required"),
   UserName: z.string().optional(),

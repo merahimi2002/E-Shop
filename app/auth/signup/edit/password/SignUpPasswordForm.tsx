@@ -11,7 +11,6 @@ import { z } from "zod";
 import { BsFillEnvelopeAtFill } from "react-icons/bs";
 import { BiSolidLock } from "react-icons/bi";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { FaUserPlus } from "react-icons/fa6";
 import { FaStarOfLife ,FaKey } from "react-icons/fa";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";

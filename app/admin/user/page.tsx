@@ -8,21 +8,26 @@ import DeleteUser from "./_components/DeleteUser";
 import MakeUserAdmin from "./_components/MakeUserAdmin";
 import MakeAdminUser from "./_components/MakeAdminUser";
 import prisma from "@/prisma/client";
-
+import AccessDenied from "@/app/components/AccessDenied";
 
 const AdminUser = async () => {
-  const Users = await prisma.user.findMany({
-    orderBy: {
-      role: "asc",
-    },
-  });
-
   const session = await getServerSession(authOptions);
   if (!session) {
     notFound();
   }
+
   const account = await prisma.user.findUnique({
     where: { email: session?.user?.email! },
+  });
+
+  if (account?.role === "USER" || account?.role === "ADDPRODUCT") {
+    return <AccessDenied />;
+  }
+
+  const Users = await prisma.user.findMany({
+    orderBy: {
+      role: "asc",
+    },
   });
 
   return (
@@ -69,7 +74,7 @@ const AdminUser = async () => {
                       <div className="">
                         {account?.role === "OWNER" ? (
                           <div className="flex justify-center items-center gap-4">
-                            <MakeAdminUser email={user.email}/>
+                            <MakeAdminUser email={user.email} />
                             <DeleteUser email={user.email} />
                           </div>
                         ) : (

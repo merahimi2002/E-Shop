@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, signOut} from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { UserSchema } from "@/app/api/validation/validationSchema";
 import { User } from "@prisma/client";
@@ -41,10 +42,25 @@ const SignUpForm = ({ user }: { user?: User }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmiting(true);
-      if (user) await axios.patch("/api/user/" + user.email, data);
-      else await axios.post("/api/user", data);
-      if (user) router.push("/");
-      else router.push("/auth/login");
+      if (user) {
+        await axios.patch("/api/user/" + user.email, data);
+        // update session
+        await signOut({ redirect: false });
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: data.email,
+          password: data.password,
+        });
+        if (result?.ok) {
+          router.push("/");
+        } else {
+          setError("an unexpected session error occurred");
+        }
+      } 
+      else {
+        await axios.post("/api/user", data);
+        router.push("/auth/login");
+      }
       router.refresh();
     } catch (error: any) {
       setIsSubmiting(false);

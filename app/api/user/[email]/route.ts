@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { UserSchema } from "../../validation/validationSchema";
+import { UpdateUserSchema } from "../../validation/validationSchema";
 import prisma from "@/prisma/client";
 import bcrypt from "bcrypt";
 
@@ -8,7 +8,7 @@ export async function PATCH(
   { params }: { params: { email: string } }
 ) {
   const body = await request.json();
-  const validation = UserSchema.safeParse(body);
+  const validation = UpdateUserSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.format(), { status: 400 });
 
@@ -36,11 +36,11 @@ export async function PATCH(
 
   if (!passwordsMatch)
     return NextResponse.json(
-      { message: "Old Password doesnt match" },
+      { message: "Password doesnt match" },
       { status: 400 }
     );
 
-  const hashedPassword = await bcrypt.hash(body.password, 10);
+  // const hashedPassword = await bcrypt.hash(body.password, 10);
 
   const updatedUser = await prisma.user.update({
     where: { email: params.email },
@@ -50,7 +50,7 @@ export async function PATCH(
       address: body.address,
       phone: body.phone,
       image: body.image,
-      hashedPassword,
+      // hashedPassword,
     },
   });
 

@@ -42,7 +42,6 @@ export const UserSchema = z
       .or(z.literal("")),
     image: z.string().optional(),
     role: z.string().optional(),
-    oldPassword: z.string().optional(),
     confirmPassword: z.string(),
     password: z
       .string()
@@ -63,8 +62,23 @@ export const UserSchema = z
     message: "Passwords do not match",
   });
 
+export const UpdateUserSchema = z.object({
+  email: z.string().email().min(1, "Email is required"),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  address: z.string().optional(),
+  phone: z
+    .string()
+    .min(11, "Phone number is 11 character")
+    .optional()
+    .or(z.literal("")),
+  image: z.string().optional(),
+  role: z.string().optional(),
+  oldPassword: z.string(),
+});
+
 export const TwoStepVerificationSchema = z.object({
   UserEmail: z.string().email().min(1, "Email is required"),
-  UserName : z.string().optional(),
+  UserName: z.string().optional(),
   VerificationCode: z.string().min(1, "Code is required"),
 });

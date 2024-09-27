@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn, signOut} from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
-import { UserSchema } from "@/app/api/validation/validationSchema";
+import { UpdateUserSchema } from "@/app/api/validation/validationSchema";
 import { User } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -18,21 +18,22 @@ import { FaStarOfLife } from "react-icons/fa";
 import ErrorMessage from "@/app/components/ErrorMessage";
 import axios from "axios";
 
-type CategoryFormProps = z.infer<typeof UserSchema>;
+
+type CategoryFormProps = z.infer<typeof UpdateUserSchema>;
 
 interface CloudinaryResult {
   public_id: string;
   url: string;
 }
 
-const SignUpForm = ({ user }: { user?: User }) => {
+const SignUpEditeForm = ({ user }: { user: User }) => {
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm<CategoryFormProps>({
-    resolver: zodResolver(UserSchema),
+    resolver: zodResolver(UpdateUserSchema),
   });
   // to relocated user
   const router = useRouter();
@@ -42,24 +43,18 @@ const SignUpForm = ({ user }: { user?: User }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setIsSubmiting(true);
-      if (user) {
-        await axios.patch("/api/user/" + user.email, data);
-        // update session
-        await signOut({ redirect: false });
-        const result = await signIn("credentials", {
-          redirect: false,
-          email: data.email,
-          password: data.password,
-        });
-        if (result?.ok) {
-          router.push("/");
-        } else {
-          setError("an unexpected session error occurred");
-        }
-      } 
-      else {
-        await axios.post("/api/user", data);
-        router.push("/auth/login");
+      await axios.patch("/api/user/" + user.email, data);
+      // update session
+      await signOut({ redirect: false });
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.oldPassword,
+      });
+      if (result?.ok) {
+        router.push("/");
+      } else {
+        setError("an unexpected session error occurred");
       }
       router.refresh();
     } catch (error: any) {
@@ -131,7 +126,7 @@ const SignUpForm = ({ user }: { user?: User }) => {
                   <input
                     type="email"
                     placeholder="Email"
-                    defaultValue={user?.email}
+                    defaultValue={user.email}
                     {...register("email")}
                     readOnly={user != undefined}
                   />
@@ -145,7 +140,7 @@ const SignUpForm = ({ user }: { user?: User }) => {
                 <input
                   type="text"
                   placeholder="First Name"
-                  defaultValue={user?.firstName?.toString()}
+                  defaultValue={user.firstName?.toString()}
                   {...register("firstName")}
                 />
               </label>
@@ -156,7 +151,7 @@ const SignUpForm = ({ user }: { user?: User }) => {
                 <input
                   type="text"
                   placeholder="Last Name"
-                  defaultValue={user?.lastName?.toString()}
+                  defaultValue={user.lastName?.toString()}
                   {...register("lastName")}
                 />
               </label>
@@ -167,7 +162,7 @@ const SignUpForm = ({ user }: { user?: User }) => {
                 <input
                   type="text"
                   placeholder="Address"
-                  defaultValue={user?.address?.toString()}
+                  defaultValue={user.address?.toString()}
                   {...register("address")}
                 />
               </label>
@@ -178,93 +173,42 @@ const SignUpForm = ({ user }: { user?: User }) => {
                 <input
                   type="number"
                   placeholder="Phone"
-                  defaultValue={user ? user?.phone?.toString() : ""}
+                  defaultValue={user.phone?.toString()}
                   {...register("phone")}
                 />
               </label>
               <ErrorMessage>{errors.phone?.message}</ErrorMessage>
               {/* image */}
               {UploadImage}
-              {/* old password for update */}
-              {user ? (
-                <label className="custom-form-input w-full text-base-200 justify-between">
-                  <div className="flex flex-center flex-row gap-2 ">
-                    <BiSolidLock className="text-secondary text-xl" />
-                    <input
-                      type={oldPassword ? "text" : "password"}
-                      placeholder={"Old Password"}
-                      {...register("oldPassword")}
-                    />
-                  </div>
-                  <div className="flex flex-center flex-row gap-3">
-                    <button
-                      onClick={() =>
-                        oldPassword
-                          ? setOldPassword(false)
-                          : setOldPassword(true)
-                      }
-                      type="button"
-                    >
-                      {password ? <FiEyeOff /> : <FiEye />}
-                    </button>
-                    <FaStarOfLife className="text-secondary text-xs" />
-                  </div>
-                </label>
-              ) : null}
-              {/* Password */}
+              {/* old password */}
               <label className="custom-form-input w-full text-base-200 justify-between">
                 <div className="flex flex-center flex-row gap-2 ">
                   <BiSolidLock className="text-secondary text-xl" />
                   <input
-                    type={password ? "text" : "password"}
-                    placeholder={user ? "New Password" : "Password"}
-                    {...register("password")}
+                    type={oldPassword ? "text" : "password"}
+                    placeholder="Password"
+                    {...register("oldPassword")}
                   />
                 </div>
                 <div className="flex flex-center flex-row gap-3">
                   <button
                     onClick={() =>
-                      password ? setPassword(false) : setPassword(true)
+                      oldPassword ? setOldPassword(false) : setOldPassword(true)
                     }
                     type="button"
                   >
-                    {password ? <FiEyeOff /> : <FiEye />}
+                    {oldPassword ? <FiEyeOff /> : <FiEye />}
                   </button>
                   <FaStarOfLife className="text-secondary text-xs" />
                 </div>
               </label>
-              <ErrorMessage>{errors.password?.message}</ErrorMessage>
-              {/* Confirm Password */}
-              <label className="custom-form-input w-full text-base-200 justify-between">
-                <div className="flex flex-center flex-row gap-2 ">
-                  <BiSolidLock className="text-secondary text-xl" />
-                  <input
-                    type={confirmPassword ? "text" : "password"}
-                    placeholder="Confirm Password"
-                    {...register("confirmPassword")}
-                  />
-                </div>
-                <div className="flex flex-center flex-row gap-3">
-                  <button
-                    onClick={() =>
-                      confirmPassword
-                        ? setConfirmPassword(false)
-                        : setConfirmPassword(true)
-                    }
-                    type="button"
-                  >
-                    {confirmPassword ? <FiEyeOff /> : <FiEye />}
-                  </button>
-                  <FaStarOfLife className="text-secondary text-xs" />
-                </div>
-              </label>
-              <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+              
               {/* button */}
               <button
                 disabled={isSubmiting}
                 className="btn btn-secondary w-fit mt-5 px-8 text-xl"
               >
-                {user ? "Update" : "Submit"}
+                Update
                 {isSubmiting && (
                   <span className="loading loading-spinner loading-md"></span>
                 )}
@@ -278,4 +222,4 @@ const SignUpForm = ({ user }: { user?: User }) => {
   );
 };
 
-export default SignUpForm;
+export default SignUpEditeForm;

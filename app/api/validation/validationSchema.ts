@@ -74,7 +74,7 @@ export const UpdateUserSchema = z.object({
     .or(z.literal("")),
   image: z.string().optional(),
   role: z.string().optional(),
-  oldPassword: z.string(),
+  Password: z.string(),
 });
 
 export const TwoStepVerificationSchema = z.object({

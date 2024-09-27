@@ -49,7 +49,7 @@ const SignUpEditeForm = ({ user }: { user: User }) => {
       const result = await signIn("credentials", {
         redirect: false,
         email: data.email,
-        password: data.oldPassword,
+        password: data.Password,
       });
       if (result?.ok) {
         router.push("/");
@@ -106,9 +106,7 @@ const SignUpEditeForm = ({ user }: { user: User }) => {
     </>
   );
   // password
-  const [password, setPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState(false);
-  const [oldPassword, setOldPassword] = useState(false);
+  const [Password, setPassword] = useState(false);
   return (
     <section>
       <div className="container">
@@ -180,24 +178,24 @@ const SignUpEditeForm = ({ user }: { user: User }) => {
               <ErrorMessage>{errors.phone?.message}</ErrorMessage>
               {/* image */}
               {UploadImage}
-              {/* old password */}
+              {/* password */}
               <label className="custom-form-input w-full text-base-200 justify-between">
                 <div className="flex flex-center flex-row gap-2 ">
                   <BiSolidLock className="text-secondary text-xl" />
                   <input
-                    type={oldPassword ? "text" : "password"}
+                    type={Password ? "text" : "password"}
                     placeholder="Password"
-                    {...register("oldPassword")}
+                    {...register("Password")}
                   />
                 </div>
                 <div className="flex flex-center flex-row gap-3">
                   <button
                     onClick={() =>
-                      oldPassword ? setOldPassword(false) : setOldPassword(true)
+                      Password ? setPassword(false) : setPassword(true)
                     }
                     type="button"
                   >
-                    {oldPassword ? <FiEyeOff /> : <FiEye />}
+                    {Password ? <FiEyeOff /> : <FiEye />}
                   </button>
                   <FaStarOfLife className="text-secondary text-xs" />
                 </div>

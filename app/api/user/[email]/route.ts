@@ -30,7 +30,7 @@ export async function PATCH(
 
   // Check Password
   const passwordsMatch = await bcrypt.compare(
-    body.oldPassword,
+    body.Password,
     User.hashedPassword
   );
 
@@ -40,8 +40,6 @@ export async function PATCH(
       { status: 400 }
     );
 
-  // const hashedPassword = await bcrypt.hash(body.password, 10);
-
   const updatedUser = await prisma.user.update({
     where: { email: params.email },
     data: {
@@ -50,7 +48,6 @@ export async function PATCH(
       address: body.address,
       phone: body.phone,
       image: body.image,
-      // hashedPassword,
     },
   });
 

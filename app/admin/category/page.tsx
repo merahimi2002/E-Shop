@@ -1,10 +1,26 @@
 import { FiEdit } from "react-icons/fi";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { notFound } from "next/navigation";
+import AccessDenied from "@/app/components/AccessDenied";
 import prisma from "@/prisma/client";
 import Link from "next/link";
 import DeleteCategory from "./_components/DeleteCategory";
 
 
 const AdminCategory = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    notFound();
+  }
+
+  const account = await prisma.user.findUnique({
+    where: { email: session?.user?.email! },
+  });
+
+  if (account?.role === "USER") {
+    return <AccessDenied />;
+  }
   const Categories = await prisma.category.findMany();
   return (
     <section>

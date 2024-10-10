@@ -1,4 +1,8 @@
 import { FiEdit } from "react-icons/fi";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { notFound } from "next/navigation";
+import AccessDenied from "@/app/components/AccessDenied";
 import Link from "next/link";
 import prisma from "@/prisma/client";
 import DeleteProduct from "./_components/DeleteProduct";
@@ -7,6 +11,18 @@ import FormatCurrency from "@/app/product/_components/FormatCurrency";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 
 const AdminProduct = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    notFound();
+  }
+
+  const account = await prisma.user.findUnique({
+    where: { email: session?.user?.email! },
+  });
+
+  if (account?.role === "USER") {
+    return <AccessDenied />;
+  }
   const Products = await prisma.product.findMany();
   return (
     <section>

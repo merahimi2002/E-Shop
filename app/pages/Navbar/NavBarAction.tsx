@@ -64,7 +64,7 @@ const NavBarAction = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/api/auth/signout">
+                <Link href="/auth/signout">
                   <TbLogout className="text-secondary text-2xl" />
                   <h2 className="text-base-200 text-base"> Sign Out</h2>
                 </Link>
@@ -73,7 +73,7 @@ const NavBarAction = () => {
           </div>
         )}
         {status === "unauthenticated" && (
-          <Link href="/api/auth/signin">
+          <Link href="/auth/login">
             <TbLogin2 className="text-white h-8 w-8" />
           </Link>
         )}

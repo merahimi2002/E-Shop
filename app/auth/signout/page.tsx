@@ -9,6 +9,7 @@ const SignOutPage = () => {
   const handleSignOut = async () => {
     await signOut({ redirect: false });
     router.push("/");
+    router.refresh();
   };
   return (
     <section>

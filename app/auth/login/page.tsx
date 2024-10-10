@@ -27,6 +27,7 @@ const LoginPage = () => {
       });
       if (result?.ok) {
         router.push("/");
+        router.refresh();
       } else {
         setError("Username or Password is not correct.");
       }
@@ -56,7 +57,11 @@ const LoginPage = () => {
                     <input
                       type="email"
                       placeholder="Email"
-                      defaultValue={status === "authenticated" ? session.user?.email ?? "" : ""}
+                      defaultValue={
+                        status === "authenticated"
+                          ? session.user?.email ?? ""
+                          : ""
+                      }
                       {...register("email")}
                     />
                   </label>

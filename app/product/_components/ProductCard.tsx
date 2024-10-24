@@ -35,7 +35,7 @@ const ProductCard = ({
         <div className="card-title text-2xl text-base-200 font-bold pb-4">
           <TextSummarizer text={title} maxChars={30} />
         </div>
-        <div className="text-base-200 text-base">
+        <div className="text-base">
           <TextSummarizer text={description} maxChars={60} />
         </div>
         <div className="flex gap-4 items-center justify-between my-4">

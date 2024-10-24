@@ -1,7 +1,4 @@
-import { PiShoppingCartLight } from "react-icons/pi";
-import { FaRegHeart } from "react-icons/fa";
-import { SlMagnifierAdd } from "react-icons/sl";
-import Link from "next/link";
+import { ProductCardButtons, ProductCardStar } from "./ProductCardAction";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 import FormatCurrency from "./FormatCurrency";
 
@@ -26,33 +23,28 @@ const ProductCard = ({
 }: ProductCardProps) => {
   return (
     <div
-      className={`card border-2 border-primary overflow-hidden`}
+      className="card overflow-hidden shadow-[0_0_10px_#4c00b0_inset]"
       key={id}
     >
-      <img className="w-full h-60 object-contain p-5" src={imageUrl} alt={title} />
+      <img
+        className="w-full h-60 object-contain p-5"
+        src={imageUrl}
+        alt={title}
+      />
       <div className="card-body">
-        <div className="card-title text-2xl text-secondary font-bold pb-4">
-          <Link href={`/product/${categorySlug}/${slug}`}>
-            <TextSummarizer text={title} maxChars={40} />
-          </Link>
+        <div className="card-title text-2xl text-base-200 font-bold pb-4">
+          <TextSummarizer text={title} maxChars={30} />
         </div>
         <div className="text-base-200 text-base">
-          <TextSummarizer text={description} maxChars={100} />
+          <TextSummarizer text={description} maxChars={60} />
         </div>
-        <span className="text-accent text-right text-lg font-medium">
-          {FormatCurrency(price).toString()}
-        </span>
-        <div className="flex gap-4 flex-center flex-row my-5">
-          <button className="text-3xl font-semibold p-3 bg-primary bg-opacity-30 border-primary border-2 text-accent rounded-md hover:bg-accent hover:text-primary duration-300">
-            <FaRegHeart />
-          </button>
-          <button className="text-3xl font-semibold p-3 bg-primary bg-opacity-30 border-primary border-2 text-accent rounded-md hover:bg-accent hover:text-primary duration-300">
-            <PiShoppingCartLight />
-          </button>
-          <button className="text-3xl font-semibold p-3 bg-primary bg-opacity-30 border-primary border-2 text-accent rounded-md hover:bg-accent hover:text-primary duration-300">
-            <SlMagnifierAdd />
-          </button>
+        <div className="flex gap-4 items-center justify-between my-4">
+          <ProductCardStar />
+          <span className="text-secondary text-right text-xl font-bold">
+            {FormatCurrency(price).toString()}
+          </span>
         </div>
+        <ProductCardButtons categorySlug={categorySlug} slug={slug} />
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { RiAdminLine } from "react-icons/ri";
+import { FaUser, FaRegHeart, FaHeart, FaShopify } from "react-icons/fa";
+import { FiShoppingCart, FiEdit } from "react-icons/fi";
 import { TbLogin2, TbLogout } from "react-icons/tb";
-import { FiEdit } from "react-icons/fi";
-import { FaUser } from "react-icons/fa";
+import { RiAdminLine } from "react-icons/ri";
+import { BsCashCoin } from "react-icons/bs";
 import Link from "next/link";
 import ThemeController from "./ThemeController";
 
@@ -16,7 +17,7 @@ const NavBarAction = () => {
         <RiAdminLine className="text-white h-8 w-8" />
       </Link>
       <ThemeController />
-      <div className="">
+      <div>
         {status === "loading" && (
           <span className="loading loading-spinner loading-md text-white mt-2"></span>
         )}
@@ -77,6 +78,66 @@ const NavBarAction = () => {
             <TbLogin2 className="text-white h-8 w-8" />
           </Link>
         )}
+      </div>
+      <div className="dropdown dropdown-end z-50">
+        <div tabIndex={0} role="button">
+          <div className="indicator">
+            <FaRegHeart className="text-white h-8 w-8" />
+            <span className="badge badge-sm badge-secondary indicator-item">
+              +8
+            </span>
+          </div>
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 rounded-box z-[1] w-48 p-2 shadow"
+        >
+          <li>
+            <div className="flex items-center">
+              <FaHeart className="text-secondary text-xl" />
+              <h2 className="text-base-200 text-base">10 Item</h2>
+            </div>
+          </li>
+          <li>
+            <Link href="/auth/signup/edit">
+              <BsCashCoin className="text-accent text-xl" />
+              <h2 className="text-base-200 text-base">$999.2 </h2>
+            </Link>
+          </li>
+          <li>
+            <div className="read-more w-full mt-4">View Cart</div>
+          </li>
+        </ul>
+      </div>
+      <div className="dropdown dropdown-end z-50">
+        <div tabIndex={0} role="button">
+          <div className="indicator">
+            <FiShoppingCart className="text-white h-8 w-8" />
+            <span className="badge badge-sm badge-secondary indicator-item">
+              +7
+            </span>
+          </div>
+        </div>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu bg-base-100 rounded-box z-[1] w-48 p-2 shadow"
+        >
+          <li>
+            <div className="flex items-center">
+              <FaShopify className="text-secondary text-xl" />
+              <h2 className="text-base-200 text-base">10 Item</h2>
+            </div>
+          </li>
+          <li>
+            <Link href="/auth/signup/edit">
+              <BsCashCoin className="text-accent text-xl" />
+              <h2 className="text-base-200 text-base">$999.2 </h2>
+            </Link>
+          </li>
+          <li>
+            <div className="read-more w-full mt-4">View Cart</div>
+          </li>
+        </ul>
       </div>
     </div>
   );

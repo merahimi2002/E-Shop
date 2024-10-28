@@ -4,9 +4,9 @@ import Category from "./pages/Category";
 
 export default function Home() {
   const Sliders = [
-    "https://res.cloudinary.com/eshop-project/image/upload/v1723888766/Slider01_zf1web.png",
-    "https://res.cloudinary.com/eshop-project/image/upload/v1723888316/Slider02_jy8g1m.png",
-    "https://res.cloudinary.com/eshop-project/image/upload/v1723887849/Slider03_rudzvp.png",
+    "https://res.cloudinary.com/eshop-project/image/upload/v1730134134/Banner01_blrlrh.png",
+    "https://res.cloudinary.com/eshop-project/image/upload/v1730134517/Banner02_msgfm1.png",
+    "https://res.cloudinary.com/eshop-project/image/upload/v1730134616/Banner03_uc4dib.png",
   ];
   return (
     <>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowDropright } from "react-icons/io";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
+import ModalsError from "@/app/components/ModalsError";
 import Link from "next/link";
 import axios from "axios";
 
@@ -44,6 +45,7 @@ export const ProductCardButtons = ({
   };
   return (
     <div className="flex gap-4 flex-center justify-between flex-row my-5">
+      {error ? <ModalsError Message={error} Status={true} /> : null}
       <div className="read-more">Add To Cart</div>
       <div className="flex gap-3 items-center">
         <button onClick={handleLoveClick} className="text-primary text-3xl">

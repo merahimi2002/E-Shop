@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { LoveCart } from "../../validation/validationSchema";
+import { LoveCartSchema } from "../../validation/validationSchema";
 import prisma from "@/prisma/client";
 
 export async function POST(request: NextResponse) {
   const body = await request.json();
-  const validation = LoveCart.safeParse(body);
+  const validation = LoveCartSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
@@ -41,7 +41,7 @@ export async function POST(request: NextResponse) {
 
 export async function DELETE(request: NextRequest) {
   const body = await request.json();
-  const validation = LoveCart.safeParse(body);
+  const validation = LoveCartSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
 
@@ -65,19 +65,16 @@ export async function DELETE(request: NextRequest) {
   }
   const UserId = ValidationUserEmail.id;
 
-  // user
-  const WrongLoveCart = await prisma.loveCart.findMany({
-    where: { userId: UserId },
+  const LoveCart = await prisma.loveCart.findFirst({
+    where: {
+      userId: UserId,
+      productId: body.productId,
+    },
   });
 
-  // product
-  const RightLoveCart = WrongLoveCart.find(
-    (item) => item.productId === body.productId
-  );
-
-  if (RightLoveCart) {
+  if (LoveCart) {
     await prisma.loveCart.delete({
-      where: { id: RightLoveCart.id },
+      where: { id: LoveCart.id },
     });
   } else {
     return NextResponse.json(

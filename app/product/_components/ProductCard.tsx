@@ -1,6 +1,9 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ProductCardButtons, ProductCardStar } from "./ProductCardAction";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 import FormatCurrency from "./FormatCurrency";
+import prisma from "@/prisma/client";
 
 interface ProductCardProps {
   id: number;
@@ -12,7 +15,7 @@ interface ProductCardProps {
   categorySlug: string;
 }
 
-const ProductCard = ({
+const ProductCard = async ({
   id,
   title,
   slug,
@@ -21,6 +24,24 @@ const ProductCard = ({
   price,
   categorySlug,
 }: ProductCardProps) => {
+  const session = await getServerSession(authOptions);
+  let LoveCartQuantity = false;
+  if (session) {
+    const UserId = await prisma.user.findUnique({
+      where: { email: session?.user?.email! },
+    });
+
+    if (UserId) {
+      const LoveCart = await prisma.loveCart.findFirst({
+        where: {
+          userId: UserId.id,
+          productId: id,
+        },
+      });
+      LoveCartQuantity = LoveCart ? LoveCart.quantity : false;
+    }
+  }
+
   return (
     <div
       className="card overflow-hidden shadow-[0_0_10px_#4c00b0_inset]"
@@ -44,7 +65,12 @@ const ProductCard = ({
             {FormatCurrency(price).toString()}
           </span>
         </div>
-        <ProductCardButtons categorySlug={categorySlug} slug={slug} productId={id} />
+        <ProductCardButtons
+          categorySlug={categorySlug}
+          slug={slug}
+          productId={id}
+          loveQuantity={LoveCartQuantity}
+        />
       </div>
     </div>
   );

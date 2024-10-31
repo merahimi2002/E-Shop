@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { IoIosArrowDropright } from "react-icons/io";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
@@ -12,29 +13,33 @@ interface ProductCardButtonsProps {
   categorySlug: string;
   slug: string;
   productId: Number;
+  loveQuantity: boolean;
 }
 
 export const ProductCardButtons = ({
   categorySlug,
   slug,
   productId,
+  loveQuantity,
 }: ProductCardButtonsProps) => {
-  const [LoveProduct, SetLoveProduct] = useState(false);
+  const [LoveProduct, SetLoveProduct] = useState(loveQuantity);
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
-
+  const [error, setError] = useState("");
+  const router = useRouter();
   const handleLoveClick = async () => {
-    if (!userEmail) return;
-
+    if (!userEmail) {
+      setError("You don't have an account");
+      throw new Error("User email not found");
+    }
     const Data = { productId, userEmail };
-
     try {
+      if (!loveQuantity) await axios.post("/api/cart/love", Data);
+      else await axios.delete("/api/cart/love", { data: Data });
       SetLoveProduct(!LoveProduct);
-      console.log(Data)
-      await axios.post("/api/cart/love", Data)
-    } catch (error) {
-      console.error("Error updating love status:", error);
-      SetLoveProduct((prev) => !prev);
+      router.refresh();
+    } catch (error: any) {
+      setError(error.response.data.message || "an unexpected error occurred");
     }
   };
   return (

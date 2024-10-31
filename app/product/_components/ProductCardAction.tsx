@@ -27,19 +27,23 @@ export const ProductCardButtons = ({
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
   const [error, setError] = useState("");
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const router = useRouter();
   const handleLoveClick = async () => {
     if (!userEmail) {
-      setError("You don't have an account");
-      throw new Error("User email not found");
+      setError("You don't have an account. Please Sign in ");
+      throw new Error("User is not signed in.");
     }
     const Data = { productId, userEmail };
     try {
+      setIsSubmiting(true);
       if (!loveQuantity) await axios.post("/api/cart/love", Data);
       else await axios.delete("/api/cart/love", { data: Data });
       SetLoveProduct(!LoveProduct);
+      setIsSubmiting(false);
       router.refresh();
     } catch (error: any) {
+      setIsSubmiting(false);
       setError(error.response.data.message || "an unexpected error occurred");
     }
   };
@@ -48,6 +52,9 @@ export const ProductCardButtons = ({
       {error ? <ModalsError Message={error} Status={true} /> : null}
       <div className="read-more">Add To Cart</div>
       <div className="flex gap-3 items-center">
+        {isSubmiting && (
+          <span className="loading loading-spinner loading-md text-primary"></span>
+        )}
         <button onClick={handleLoveClick} className="text-primary text-3xl">
           {LoveProduct ? <FaHeart /> : <FaRegHeart />}
         </button>

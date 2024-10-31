@@ -109,5 +109,5 @@ export const TwoStepVerificationSchema = z.object({
 
 export const LoveCart = z.object({
   productId: z.number().min(1, "Product Id is required"),
-  userId: z.string().min(1, "User Id is required"),
+  userEmail: z.string().min(1, "User Email is required"),
 });

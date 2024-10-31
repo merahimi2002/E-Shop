@@ -44,7 +44,7 @@ const ProductCard = ({
             {FormatCurrency(price).toString()}
           </span>
         </div>
-        <ProductCardButtons categorySlug={categorySlug} slug={slug} />
+        <ProductCardButtons categorySlug={categorySlug} slug={slug} productId={id} />
       </div>
     </div>
   );

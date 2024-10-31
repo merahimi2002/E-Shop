@@ -9,7 +9,7 @@ export async function POST(request: NextResponse) {
     return NextResponse.json(validation.error.errors, { status: 400 });
 
   // check if product exist
-  const ValidationProductId = prisma.product.findUnique({
+  const ValidationProductId = await prisma.product.findUnique({
     where: { id: body.productId },
   });
   if (!ValidationProductId) {
@@ -20,18 +20,19 @@ export async function POST(request: NextResponse) {
   }
 
   // check if user exist
-  const ValidationUserId = prisma.user.findUnique({
-    where: { id: body.userId },
+  const ValidationUserEmail = await prisma.user.findUnique({
+    where: { email: body.userEmail },
   });
-  if (!ValidationUserId) {
+  if (!ValidationUserEmail) {
     return NextResponse.json({ message: "User is not exist" }, { status: 400 });
   }
+  const UserId = ValidationUserEmail.id
 
   const newLoveCart = await prisma.loveCart.create({
     data: {
       quantity: true,
       productId: body.productId,
-      userId: body.userId,
+      userId: UserId,
     },
   });
 

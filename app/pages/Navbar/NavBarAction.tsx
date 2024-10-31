@@ -1,7 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { FaUser, FaRegHeart, FaHeart, FaShopify } from "react-icons/fa";
+import { FaRegHeart, FaHeart, FaHeartBroken } from "react-icons/fa";
+import { FaUser, FaShopify } from "react-icons/fa";
 import { FiShoppingCart, FiEdit } from "react-icons/fi";
 import { TbLogin2, TbLogout } from "react-icons/tb";
 import { RiAdminLine } from "react-icons/ri";
@@ -9,7 +10,12 @@ import { BsCashCoin } from "react-icons/bs";
 import Link from "next/link";
 import ThemeController from "./ThemeController";
 
-const NavBarAction = () => {
+interface NavBarActionProps {
+  LoveCartCount: number;
+  LoveCartTotalPrice: number
+}
+
+const NavBarAction = ({ LoveCartCount , LoveCartTotalPrice }: NavBarActionProps) => {
   const { status, data: session } = useSession();
   return (
     <div className="flex gap-4 justify-center items-center">
@@ -84,7 +90,7 @@ const NavBarAction = () => {
           <div className="indicator">
             <FaRegHeart className="text-white h-8 w-8" />
             <span className="badge badge-sm badge-secondary indicator-item">
-              +8
+              +{LoveCartCount}
             </span>
           </div>
         </div>
@@ -94,14 +100,20 @@ const NavBarAction = () => {
         >
           <li>
             <div className="flex items-center">
-              <FaHeart className="text-secondary text-xl" />
-              <h2 className="text-base-200 text-base">10 Item</h2>
+              {LoveCartCount == 0 ? (
+                <FaHeartBroken className="text-secondary text-xl" />
+              ) : (
+                <FaHeart className="text-secondary text-xl" />
+              )}
+              <h2 className="text-base-200 text-base">
+                {LoveCartCount == 0 ? "No Item" : LoveCartCount + " Item"}
+              </h2>
             </div>
           </li>
           <li>
             <Link href="/auth/signup/edit">
               <BsCashCoin className="text-accent text-xl" />
-              <h2 className="text-base-200 text-base">$999.2 </h2>
+              <h2 className="text-base-200 text-base">${LoveCartTotalPrice} </h2>
             </Link>
           </li>
           <li>

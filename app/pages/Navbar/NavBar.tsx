@@ -1,11 +1,40 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { RiMenu2Fill } from "react-icons/ri";
 import Logo from "@/public/image/Logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import NavBarLinks from "./NavBarLinks";
 import NavBarAction from "./NavBarAction";
+import prisma from "@/prisma/client";
 
-const NavBar = () => {
+const NavBar = async () => {
+  let LoveCartCount = 0;
+  let LoveCartTotalPrice = 0;
+
+  const session = await getServerSession(authOptions);
+  if (session) {
+    const User = await prisma.user.findUnique({
+      where: { email: session.user?.email! },
+    });
+    LoveCartCount = await prisma.loveCart.count({
+      where: { userId: User?.id },
+    });
+
+    const LoveCartItems = await prisma.loveCart.findMany({
+      where: { userId: User?.id },
+    });
+    const productIds = LoveCartItems.map((item) => item.productId).filter(
+      (id): id is number => id !== null
+    );
+    const LoveCartPrice = await prisma.product.aggregate({
+      where: { id: { in: productIds } },
+      _sum: { price: true },
+    });
+
+    LoveCartTotalPrice = LoveCartPrice._sum.price?.toNumber() ?? 0;
+  }
+
   return (
     <div className="bg-primary">
       <div className="container">
@@ -36,7 +65,10 @@ const NavBar = () => {
             </ul>
           </div>
           <div className="navbar-end">
-            <NavBarAction />
+            <NavBarAction
+              LoveCartCount={LoveCartCount}
+              LoveCartTotalPrice={LoveCartTotalPrice}
+            />
           </div>
         </div>
       </div>

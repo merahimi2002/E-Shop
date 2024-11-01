@@ -12,10 +12,13 @@ import ThemeController from "./ThemeController";
 
 interface NavBarActionProps {
   LoveCartCount: number;
-  LoveCartTotalPrice: number
+  LoveCartTotalPrice: number;
 }
 
-const NavBarAction = ({ LoveCartCount , LoveCartTotalPrice }: NavBarActionProps) => {
+const NavBarAction = ({
+  LoveCartCount,
+  LoveCartTotalPrice,
+}: NavBarActionProps) => {
   const { status, data: session } = useSession();
   return (
     <div className="flex gap-4 justify-center items-center">
@@ -113,11 +116,24 @@ const NavBarAction = ({ LoveCartCount , LoveCartTotalPrice }: NavBarActionProps)
           <li>
             <Link href="/auth/signup/edit">
               <BsCashCoin className="text-accent text-xl" />
-              <h2 className="text-base-200 text-base">${LoveCartTotalPrice} </h2>
+              <h2 className="text-base-200 text-base">
+                ${LoveCartTotalPrice}{" "}
+              </h2>
             </Link>
           </li>
           <li>
-            <div className="read-more w-full mt-4">View Cart</div>
+            {LoveCartCount == 0 ? (
+              <button
+                disabled
+                className="read-more w-full mt-4 opacity-50 !cursor-not-allowed"
+              >
+                View Items
+              </button>
+            ) : (
+              <div className="read-more w-full mt-4">
+                <Link href="/pages/cart/love">View Items</Link>
+              </div>
+            )}
           </li>
         </ul>
       </div>

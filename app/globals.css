@@ -69,8 +69,11 @@
   .thead-primary thead tr th{
     @apply py-6 text-xl text-secondary bg-primary
   }
-  
 
+  .custom-disabled{
+    @apply opacity-50 !cursor-not-allowed
+  }
+  
 }
 
 @layer utilities {

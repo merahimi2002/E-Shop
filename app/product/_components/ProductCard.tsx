@@ -26,6 +26,7 @@ const ProductCard = async ({
 }: ProductCardProps) => {
   const session = await getServerSession(authOptions);
   let LoveCartQuantity = false;
+  let ShopCartQuantity = 0;
   if (session) {
     const UserId = await prisma.user.findUnique({
       where: { email: session?.user?.email! },
@@ -39,6 +40,14 @@ const ProductCard = async ({
         },
       });
       LoveCartQuantity = LoveCart ? LoveCart.quantity : false;
+
+      const ShopCart = await prisma.shopCart.findFirst({
+        where: {
+          userId: UserId.id,
+          productId: id,
+        },
+      });
+      ShopCartQuantity = ShopCart ? ShopCart.quantity : 0;
     }
   }
 
@@ -70,6 +79,7 @@ const ProductCard = async ({
           slug={slug}
           productId={id}
           loveQuantity={LoveCartQuantity}
+          ShopQuantity={ShopCartQuantity}
         />
       </div>
     </div>

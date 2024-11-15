@@ -15,6 +15,7 @@ interface ProductCardButtonsProps {
   slug: string;
   productId: Number;
   loveQuantity: boolean;
+  ShopQuantity: number;
 }
 
 export const ProductCardButtons = ({
@@ -22,12 +23,15 @@ export const ProductCardButtons = ({
   slug,
   productId,
   loveQuantity,
+  ShopQuantity,
 }: ProductCardButtonsProps) => {
   const [LoveProduct, SetLoveProduct] = useState(loveQuantity);
+  const [ShopProduct, SetShopProduct] = useState(ShopQuantity);
   const { data: session } = useSession();
   const userEmail = session?.user?.email;
   const [error, setError] = useState("");
-  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isSubmitingLove, setIsSubmitingLove] = useState(false);
+  const [isSubmitingShop, setIsSubmitingShop] = useState(false);
   const router = useRouter();
   const handleLoveClick = async () => {
     if (!userEmail) {
@@ -36,23 +40,54 @@ export const ProductCardButtons = ({
     }
     const Data = { productId, userEmail };
     try {
-      setIsSubmiting(true);
+      setIsSubmitingLove(true);
       if (!loveQuantity) await axios.post("/api/cart/love", Data);
       else await axios.delete("/api/cart/love", { data: Data });
       SetLoveProduct(!LoveProduct);
-      setIsSubmiting(false);
+      setIsSubmitingLove(false);
       router.refresh();
     } catch (error: any) {
-      setIsSubmiting(false);
+      setIsSubmitingLove(false);
+      setError(error.response.data.message || "an unexpected error occurred");
+    }
+  };
+  const handleShopClick = async () => {
+    if (!userEmail) {
+      setError("You don't have an account. Please Sign in ");
+      throw new Error("User is not signed in.");
+    }
+    const quantity = ShopQuantity + 1;
+    const Data = { quantity, productId, userEmail };
+    try {
+      setIsSubmitingShop(true);
+      await axios.post("/api/cart/shop", Data);
+      SetShopProduct(quantity);
+      setIsSubmitingShop(false);
+      router.refresh();
+    } catch (error: any) {
+      setIsSubmitingShop(false);
       setError(error.response.data.message || "an unexpected error occurred");
     }
   };
   return (
     <div className="flex gap-4 flex-center justify-between flex-row my-5">
       {error ? <ModalsError Message={error} Status={true} /> : null}
-      <div className="read-more">Add To Cart</div>
+      <button
+        disabled={ShopProduct != 0}
+        onClick={handleShopClick}
+        className={
+          ShopProduct != 0
+            ? "read-more bg-gradient-to-br from-accent to-primary px-10 hover:custom-disabled"
+            : "read-more"
+        }
+      >
+        {isSubmitingShop && (
+          <span className="loading loading-spinner loading-md text-primary mr-3"></span>
+        )}
+        {ShopProduct == 0 ? "Add To Cart" : "Added!"}
+      </button>
       <div className="flex gap-3 items-center">
-        {isSubmiting && (
+        {isSubmitingLove && (
           <span className="loading loading-spinner loading-md text-primary"></span>
         )}
         <button onClick={handleLoveClick} className="text-primary text-3xl">

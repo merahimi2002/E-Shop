@@ -125,7 +125,7 @@ const NavBarAction = ({
             {LoveCartCount == 0 ? (
               <button
                 disabled
-                className="read-more w-full mt-4 opacity-50 !cursor-not-allowed"
+                className="read-more w-full mt-4 custom-disabled"
               >
                 View Items
               </button>

@@ -6,18 +6,22 @@ import { FaUser, FaShopify } from "react-icons/fa";
 import { FiShoppingCart, FiEdit } from "react-icons/fi";
 import { TbLogin2, TbLogout } from "react-icons/tb";
 import { RiAdminLine } from "react-icons/ri";
-import { BsCashCoin } from "react-icons/bs";
+import { BsCashCoin, BsCartXFill } from "react-icons/bs";
 import Link from "next/link";
 import ThemeController from "./ThemeController";
 
 interface NavBarActionProps {
   LoveCartCount: number;
   LoveCartTotalPrice: number;
+  ShopCartCount: number;
+  ShopCartTotalPrice: number;
 }
 
 const NavBarAction = ({
   LoveCartCount,
   LoveCartTotalPrice,
+  ShopCartCount,
+  ShopCartTotalPrice,
 }: NavBarActionProps) => {
   const { status, data: session } = useSession();
   return (
@@ -114,12 +118,12 @@ const NavBarAction = ({
             </div>
           </li>
           <li>
-            <Link href="/auth/signup/edit">
+            <div className="">
               <BsCashCoin className="text-accent text-xl" />
               <h2 className="text-base-200 text-base">
                 ${LoveCartTotalPrice}{" "}
               </h2>
-            </Link>
+            </div>
           </li>
           <li>
             {LoveCartCount == 0 ? (
@@ -142,7 +146,7 @@ const NavBarAction = ({
           <div className="indicator">
             <FiShoppingCart className="text-white h-8 w-8" />
             <span className="badge badge-sm badge-secondary indicator-item">
-              +7
+              +{ShopCartCount}
             </span>
           </div>
         </div>
@@ -152,18 +156,37 @@ const NavBarAction = ({
         >
           <li>
             <div className="flex items-center">
-              <FaShopify className="text-secondary text-xl" />
-              <h2 className="text-base-200 text-base">10 Item</h2>
+              {ShopCartCount == 0 ? (
+                <BsCartXFill className="text-secondary text-xl" />
+              ) : (
+                <FaShopify className="text-secondary text-xl" />
+              )}
+              <h2 className="text-base-200 text-base">
+                {ShopCartCount == 0 ? "No Item" : ShopCartCount + " Item"}
+              </h2>
             </div>
           </li>
           <li>
-            <Link href="/auth/signup/edit">
+            <div className="">
               <BsCashCoin className="text-accent text-xl" />
-              <h2 className="text-base-200 text-base">$999.2 </h2>
-            </Link>
+              <h2 className="text-base-200 text-base">
+                ${ShopCartTotalPrice}{" "}
+              </h2>
+            </div>
           </li>
           <li>
-            <div className="read-more w-full mt-4">View Cart</div>
+            {ShopCartCount == 0 ? (
+              <button
+                disabled
+                className="read-more w-full mt-4 custom-disabled"
+              >
+                View Cart
+              </button>
+            ) : (
+              <div className="read-more w-full mt-4">
+                <Link href="/pages/cart/shop">View Cart</Link>
+              </div>
+            )}
           </li>
         </ul>
       </div>

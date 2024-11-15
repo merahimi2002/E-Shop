@@ -11,16 +11,19 @@ import prisma from "@/prisma/client";
 const NavBar = async () => {
   let LoveCartCount = 0;
   let LoveCartTotalPrice = 0;
+  let ShopCartCount = 0;
+  let ShopCartTotalPrice = 0;
 
   const session = await getServerSession(authOptions);
   if (session) {
     const User = await prisma.user.findUnique({
       where: { email: session.user?.email! },
     });
+    // Love Cart - Love Cart Count
     LoveCartCount = await prisma.loveCart.count({
       where: { userId: User?.id },
     });
-
+    // Love Cart Count Total Price
     const LoveCartItems = await prisma.loveCart.findMany({
       where: { userId: User?.id },
     });
@@ -31,8 +34,24 @@ const NavBar = async () => {
       where: { id: { in: productIds } },
       _sum: { price: true },
     });
-
     LoveCartTotalPrice = LoveCartPrice._sum.price?.toNumber() ?? 0;
+
+    // Shop Cart - Shop Cart Count
+    ShopCartCount = await prisma.shopCart.count({
+      where: { userId: User?.id },
+    });
+    // Shop Cart Count Total Price
+    const ShopCartItems = await prisma.shopCart.findMany({
+      where: { userId: User?.id },
+    });
+    const ShopProductIds = ShopCartItems.map((item) => item.productId).filter(
+      (id): id is number => id !== null
+    );
+    const ShopCartPrice = await prisma.product.aggregate({
+      where: { id: { in: ShopProductIds } },
+      _sum: { price: true },
+    });
+    ShopCartTotalPrice = ShopCartPrice._sum.price?.toNumber() ?? 0;
   }
 
   return (
@@ -68,6 +87,8 @@ const NavBar = async () => {
             <NavBarAction
               LoveCartCount={LoveCartCount}
               LoveCartTotalPrice={LoveCartTotalPrice}
+              ShopCartCount={ShopCartCount}
+              ShopCartTotalPrice={ShopCartTotalPrice}
             />
           </div>
         </div>

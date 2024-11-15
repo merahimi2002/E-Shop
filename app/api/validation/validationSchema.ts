@@ -111,3 +111,9 @@ export const LoveCartSchema = z.object({
   productId: z.number().min(1, "Product Id is required"),
   userEmail: z.string().min(1, "User Email is required"),
 });
+
+export const ShopCartSchema = z.object({
+  quantity: z.number(),
+  productId: z.number().min(1, "Product Id is required"),
+  userEmail: z.string().min(1, "User Email is required"),
+});

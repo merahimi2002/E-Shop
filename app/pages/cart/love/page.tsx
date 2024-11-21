@@ -17,13 +17,7 @@ const LovePage = async () => {
   });
   const LoveCartItems = await prisma.loveCart.findMany({
     where: { userId: User?.id },
-  });
-
-  const productIds = LoveCartItems.map((item) => item.productId).filter(
-    (id): id is number => id !== null
-  );
-  const Products = await prisma.product.findMany({
-    where: { id: { in: productIds } },
+    include: { Product: true },
   });
 
   return (
@@ -39,32 +33,32 @@ const LovePage = async () => {
             </tr>
           </thead>
           <tbody>
-            {Products.map((product) => (
-              <tr key={product.id} className="text-center">
+            {LoveCartItems.map((LoveItem) => (
+              <tr key={LoveItem.id} className="text-center">
                 <td>
                   <img
-                    src={product.imageUrl}
-                    alt={product.title}
+                    src={LoveItem.Product?.imageUrl}
+                    alt={LoveItem.Product?.title}
                     className="object-cover w-20 h-20 m-auto"
                   />
                 </td>
                 <td className="text-base-200">
-                  {product.title.length < 20 ? (
-                    product.title
+                  {LoveItem.Product?.title.length! < 20 ? (
+                    LoveItem.Product?.title
                   ) : (
                     <div
                       className="tooltip tooltip-primary"
-                      data-tip={product.title}
+                      data-tip={LoveItem.Product?.title}
                     >
-                      <TextSummarizer text={product.title} maxChars={20} />
+                      <TextSummarizer text={LoveItem.Product?.title!} maxChars={20} />
                     </div>
                   )}
                 </td>
                 <td className="text-accent text-2xl font-bold">
-                  {FormatCurrency(product.price)}
+                  {FormatCurrency(LoveItem.Product?.price)}
                 </td>
                 <td>
-                  <DeleteLoveCart productId={product.id} />
+                  <DeleteLoveCart productId={LoveItem.Product?.id!} />
                 </td>
               </tr>
             ))}

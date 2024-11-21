@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 import FormatCurrency from "@/app/product/_components/FormatCurrency";
+import DeleteShopCart from "./Delete";
 
 const CartPage = async () => {
   const session = await getServerSession(authOptions);
@@ -14,16 +15,12 @@ const CartPage = async () => {
   const User = await prisma.user.findUnique({
     where: { email: session.user?.email! },
   });
+
   const ShopCartItems = await prisma.shopCart.findMany({
     where: { userId: User?.id },
+    include: { Product: true },
   });
 
-  const productIds = ShopCartItems.map((item) => item.productId).filter(
-    (id): id is number => id !== null
-  );
-  const Products = await prisma.product.findMany({
-    where: { id: { in: productIds } },
-  });
   return (
     <section>
       <div className="container">
@@ -37,31 +34,42 @@ const CartPage = async () => {
             </tr>
           </thead>
           <tbody>
-            {Products.map((product) => (
-              <tr key={product.id} className="text-center">
+            {ShopCartItems.map((ShopItem) => (
+              <tr key={ShopItem.id} className="text-center">
                 <td>
                   <img
-                    src={product.imageUrl}
-                    alt={product.title}
+                    src={ShopItem.Product?.imageUrl}
+                    alt={ShopItem.Product?.title}
                     className="object-cover w-20 h-20 m-auto"
                   />
                 </td>
                 <td className="text-base-200">
-                  {product.title.length < 20 ? (
-                    product.title
+                  {ShopItem.Product?.title.length! < 20 ? (
+                    ShopItem.Product?.title
                   ) : (
                     <div
                       className="tooltip tooltip-primary"
-                      data-tip={product.title}
+                      data-tip={ShopItem.Product?.title}
                     >
-                      <TextSummarizer text={product.title} maxChars={20} />
+                      <TextSummarizer
+                        text={ShopItem.Product?.title!}
+                        maxChars={20}
+                      />
                     </div>
                   )}
                 </td>
                 <td className="text-accent text-2xl font-bold">
-                  {FormatCurrency(product.price)}
+                  {FormatCurrency(ShopItem.Product?.price)}
                 </td>
-                <td>{/* <DeleteLoveCart productId={product.id} /> */}</td>
+                <td>
+                  <div className="flex flex-center flex-row gap-4">
+                    {ShopItem.quantity}
+                    <DeleteShopCart
+                      productId={ShopItem.productId!}
+                      quantity={ShopItem.quantity}
+                    />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

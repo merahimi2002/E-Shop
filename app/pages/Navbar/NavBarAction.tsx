@@ -134,8 +134,8 @@ const NavBarAction = ({
                 View Items
               </button>
             ) : (
-              <div className="read-more w-full mt-4">
-                <Link href="/pages/cart/love">View Items</Link>
+              <div className="read-more p-0 mt-4 mx-auto">
+                <Link className="w-full px-8 py-3" href="/pages/cart/love">View Items</Link>
               </div>
             )}
           </li>
@@ -183,8 +183,8 @@ const NavBarAction = ({
                 View Cart
               </button>
             ) : (
-              <div className="read-more w-full mt-4">
-                <Link href="/pages/cart/shop">View Cart</Link>
+              <div className="read-more p-0 mt-4 mx-auto">
+                <Link className="w-full px-8 py-3" href="/pages/cart/shop">View Cart</Link>
               </div>
             )}
           </li>

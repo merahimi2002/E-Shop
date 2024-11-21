@@ -4,9 +4,8 @@ import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 import FormatCurrency from "@/app/product/_components/FormatCurrency";
-import DeleteLoveCart from "./Delete";
 
-const LovePage = async () => {
+const CartPage = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
     notFound();
@@ -15,17 +14,16 @@ const LovePage = async () => {
   const User = await prisma.user.findUnique({
     where: { email: session.user?.email! },
   });
-  const LoveCartItems = await prisma.loveCart.findMany({
+  const ShopCartItems = await prisma.shopCart.findMany({
     where: { userId: User?.id },
   });
 
-  const productIds = LoveCartItems.map((item) => item.productId).filter(
+  const productIds = ShopCartItems.map((item) => item.productId).filter(
     (id): id is number => id !== null
   );
   const Products = await prisma.product.findMany({
     where: { id: { in: productIds } },
   });
-
   return (
     <section>
       <div className="container">
@@ -63,9 +61,7 @@ const LovePage = async () => {
                 <td className="text-accent text-2xl font-bold">
                   {FormatCurrency(product.price)}
                 </td>
-                <td>
-                  <DeleteLoveCart productId={product.id} />
-                </td>
+                <td>{/* <DeleteLoveCart productId={product.id} /> */}</td>
               </tr>
             ))}
           </tbody>
@@ -75,4 +71,4 @@ const LovePage = async () => {
   );
 };
 
-export default LovePage;
+export default CartPage;

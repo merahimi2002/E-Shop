@@ -6,7 +6,6 @@ import AccessDenied from "@/app/components/AccessDenied";
 import Link from "next/link";
 import prisma from "@/prisma/client";
 import DeleteProduct from "./_components/DeleteProduct";
-import CategoryIdToName from "@/app/product/_components/CategoryIdToName";
 import FormatCurrency from "@/app/product/_components/FormatCurrency";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 
@@ -23,7 +22,9 @@ const AdminProduct = async () => {
   if (account?.role === "USER") {
     return <AccessDenied />;
   }
-  const Products = await prisma.product.findMany();
+  const Products = await prisma.product.findMany({
+    include: { Category: true },
+  });
   return (
     <section>
       <div className="container">
@@ -63,7 +64,7 @@ const AdminProduct = async () => {
                     <TextSummarizer text={product.description} maxChars={10} />
                   </td>
                   <td>
-                    <CategoryIdToName Id={product.categoryId} />
+                    {product.Category?.title}
                   </td>
                   <td>{FormatCurrency(product.price)}</td>
                   <td>

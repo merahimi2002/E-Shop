@@ -90,9 +90,11 @@ export const ProductCardButtons = ({
         {isSubmitingLove && (
           <span className="loading loading-spinner loading-md text-primary"></span>
         )}
-        <button onClick={handleLoveClick} className="text-primary text-3xl">
-          {LoveProduct ? <FaHeart /> : <FaRegHeart />}
-        </button>
+        {!isSubmitingLove && (
+          <button onClick={handleLoveClick} className="text-primary text-3xl">
+            {LoveProduct ? <FaHeart /> : <FaRegHeart />}
+          </button>
+        )}
         <div className="text-primary text-4xl duration-300 hover:text-accent">
           <Link href={`/product/${categorySlug}/${slug}`}>
             <IoIosArrowDropright />

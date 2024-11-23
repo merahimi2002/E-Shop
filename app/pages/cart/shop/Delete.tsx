@@ -34,7 +34,7 @@ const DeleteShopCart = ({ productId, quantity }: DeleteShopCartProps) => {
       disabled={isDeleting}
       className="btn btn-error w-fit text-xl px-4"
     >
-      <RiDeleteBin6Line />
+      {!isDeleting && <RiDeleteBin6Line />}
       {isDeleting && (
         <span className="loading loading-spinner loading-md"></span>
       )}

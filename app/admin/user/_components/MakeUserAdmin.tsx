@@ -35,7 +35,7 @@ const MakeUserAdmin = ({ email }: { email: string }) => {
         disabled={isAdmin}
         className="btn btn-success text-white w-fit text-xl px-4"
       >
-        <GrUserAdmin />
+        {!isAdmin && <GrUserAdmin />}
         {isAdmin && (
           <span className="loading loading-spinner loading-md"></span>
         )}

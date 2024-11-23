@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import prisma from "@/prisma/client";
 import TextSummarizer from "@/app/product/_components/TextSummarizer";
 import FormatCurrency from "@/app/product/_components/FormatCurrency";
-import DeleteShopCart from "./Delete";
+import ShopCartAction from "./ShopCartAction";
 
 const CartPage = async () => {
   const session = await getServerSession(authOptions);
@@ -63,8 +63,7 @@ const CartPage = async () => {
                 </td>
                 <td>
                   <div className="flex flex-center flex-row gap-4">
-                    {ShopItem.quantity}
-                    <DeleteShopCart
+                    <ShopCartAction
                       productId={ShopItem.productId!}
                       quantity={ShopItem.quantity}
                     />

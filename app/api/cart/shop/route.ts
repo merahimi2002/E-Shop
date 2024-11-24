@@ -39,6 +39,48 @@ export async function POST(request: NextResponse) {
   return NextResponse.json(newShopCart, { status: 201 });
 }
 
+export async function PATCH(request: NextResponse) {
+  const body = await request.json();
+  const validation = ShopCartSchema.safeParse(body);
+  if (!validation.success)
+    return NextResponse.json(validation.error.errors, { status: 400 });
+
+  // check if product exist
+  const ValidationProductId = await prisma.product.findUnique({
+    where: { id: body.productId },
+  });
+  if (!ValidationProductId) {
+    return NextResponse.json(
+      { message: "Product is not exist" },
+      { status: 400 }
+    );
+  }
+
+  // check if user exist
+  const ValidationUserEmail = await prisma.user.findUnique({
+    where: { email: body.userEmail },
+  });
+  if (!ValidationUserEmail) {
+    return NextResponse.json({ message: "User is not exist" }, { status: 400 });
+  }
+  const UserId = ValidationUserEmail.id;
+
+  const newShopCart = await prisma.shopCart.updateMany({
+    where: { productId: body.productId, userId: UserId },
+    data: {
+      quantity: body.quantity,
+    },
+  });
+
+  if (newShopCart.count === 0) {
+    return NextResponse.json(
+      { message: "Shop cart does not exist" },
+      { status: 400 }
+    );
+  }
+
+  return NextResponse.json(newShopCart, { status: 201 });
+}
 
 export async function DELETE(request: NextRequest) {
   const body = await request.json();

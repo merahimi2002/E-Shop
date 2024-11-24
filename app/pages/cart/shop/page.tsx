@@ -65,7 +65,7 @@ const CartPage = async () => {
                   <div className="flex flex-center flex-row gap-4">
                     <ShopCartAction
                       productId={ShopItem.productId!}
-                      quantity={ShopItem.quantity}
+                      Quantity={ShopItem.quantity}
                     />
                   </div>
                 </td>

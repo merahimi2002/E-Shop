@@ -12,7 +12,7 @@ const NavBar = async () => {
   let LoveCartCount = 0;
   let LoveCartTotalPrice = 0;
   let ShopCartCount = 0;
-  let ShopCartTotalPrice = 0;
+  let ShopCartTotalPrice = "";
 
   const session = await getServerSession(authOptions);
   if (session) {
@@ -24,34 +24,36 @@ const NavBar = async () => {
       where: { userId: User?.id },
     });
     // Love Cart Count Total Price
-    const LoveCartItems = await prisma.loveCart.findMany({
-      where: { userId: User?.id },
-    });
-    const productIds = LoveCartItems.map((item) => item.productId).filter(
-      (id): id is number => id !== null
-    );
-    const LoveCartPrice = await prisma.product.aggregate({
-      where: { id: { in: productIds } },
-      _sum: { price: true },
-    });
-    LoveCartTotalPrice = LoveCartPrice._sum.price?.toNumber() ?? 0;
+    LoveCartTotalPrice = await prisma.loveCart
+      .findMany({
+        where: { userId: User?.id },
+        include: { Product: true },
+      })
+      .then((items) =>
+        items.reduce(
+          (total, item) => total + (item.Product?.price.toNumber() ?? 0),
+          0
+        )
+      );
 
     // Shop Cart - Shop Cart Count
-    ShopCartCount = await prisma.shopCart.count({
+    const ShopCartCountArray = await prisma.shopCart.aggregate({
+      _sum: { quantity: true },
+    });
+    if (ShopCartCountArray._sum.quantity) {
+      ShopCartCount = ShopCartCountArray._sum.quantity;
+    }
+    // Shop Cart - ShopCartTotalPrice
+    const ShopCartProductArray = await prisma.shopCart.findMany({
       where: { userId: User?.id },
+      include: { Product: true },
     });
-    // Shop Cart Count Total Price
-    const ShopCartItems = await prisma.shopCart.findMany({
-      where: { userId: User?.id },
-    });
-    const ShopProductIds = ShopCartItems.map((item) => item.productId).filter(
-      (id): id is number => id !== null
-    );
-    const ShopCartPrice = await prisma.product.aggregate({
-      where: { id: { in: ShopProductIds } },
-      _sum: { price: true },
-    });
-    ShopCartTotalPrice = ShopCartPrice._sum.price?.toNumber() ?? 0;
+
+    ShopCartTotalPrice = ShopCartProductArray.reduce(
+      (total, item) =>
+        total + item.quantity * (item.Product?.price?.toNumber() ?? 0),
+      0
+    ).toFixed(2);
   }
 
   return (

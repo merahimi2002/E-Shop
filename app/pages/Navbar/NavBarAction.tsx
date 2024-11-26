@@ -9,12 +9,13 @@ import { RiAdminLine } from "react-icons/ri";
 import { BsCashCoin, BsCartXFill } from "react-icons/bs";
 import Link from "next/link";
 import ThemeController from "./ThemeController";
+import FormatCurrency from "@/app/product/_components/FormatCurrency";
 
 interface NavBarActionProps {
   LoveCartCount: number;
   LoveCartTotalPrice: number;
   ShopCartCount: number;
-  ShopCartTotalPrice: number;
+  ShopCartTotalPrice: string;
 }
 
 const NavBarAction = ({
@@ -121,7 +122,7 @@ const NavBarAction = ({
             <div className="">
               <BsCashCoin className="text-accent text-xl" />
               <h2 className="text-base-200 text-base">
-                ${LoveCartTotalPrice}{" "}
+                {FormatCurrency(LoveCartTotalPrice)}
               </h2>
             </div>
           </li>
@@ -135,7 +136,9 @@ const NavBarAction = ({
               </button>
             ) : (
               <div className="read-more p-0 mt-4 mx-auto">
-                <Link className="w-full px-8 py-3" href="/pages/cart/love">View Items</Link>
+                <Link className="w-full px-8 py-3" href="/pages/cart/love">
+                  View Items
+                </Link>
               </div>
             )}
           </li>
@@ -170,7 +173,7 @@ const NavBarAction = ({
             <div className="">
               <BsCashCoin className="text-accent text-xl" />
               <h2 className="text-base-200 text-base">
-                ${ShopCartTotalPrice}{" "}
+                {FormatCurrency(ShopCartTotalPrice)}
               </h2>
             </div>
           </li>
@@ -184,7 +187,9 @@ const NavBarAction = ({
               </button>
             ) : (
               <div className="read-more p-0 mt-4 mx-auto">
-                <Link className="w-full px-8 py-3" href="/pages/cart/shop">View Cart</Link>
+                <Link className="w-full px-8 py-3" href="/pages/cart/shop">
+                  View Cart
+                </Link>
               </div>
             )}
           </li>

@@ -29,7 +29,7 @@ model Product {
   imageUrl        String     @db.VarChar(255)
   price           Decimal    @db.Decimal(9, 2)
   Category        Category?  @relation(fields: [categoryId], references: [id])
-  categoryId      Int?
+  categoryId      Int
   loveQuantity    LoveCart[]
   ProductQuantity ShopCart[]
 }
@@ -59,16 +59,16 @@ model LoveCart {
   id        Int      @id @unique @default(autoincrement())
   quantity  Boolean
   Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  productId Int
   User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  userId    String
 }
 
 model ShopCart {
   id        Int      @id @unique @default(autoincrement())
   quantity  Int
   Product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
+  productId Int
   User      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  userId    String
 }

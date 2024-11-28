@@ -21,6 +21,23 @@ const CartPage = async () => {
     include: { Product: true },
   });
 
+  // Shop Cart - Shop Cart Count
+  const ShopCartCountArray = await prisma.shopCart.aggregate({
+    _sum: { quantity: true },
+  });
+  const ShopCartCount = ShopCartCountArray._sum.quantity;
+  // Shop Cart - ShopCartTotalPrice
+  const ShopCartProductArray = await prisma.shopCart.findMany({
+    where: { userId: User?.id },
+    include: { Product: true },
+  });
+
+  const ShopCartTotalPrice = ShopCartProductArray.reduce(
+    (total, item) =>
+      total + item.quantity * (item.Product?.price?.toNumber() ?? 0),
+    0
+  ).toFixed(2);
+
   return (
     <section>
       <div className="container">
@@ -71,6 +88,29 @@ const CartPage = async () => {
                 </td>
               </tr>
             ))}
+            <tr className="text-center">
+              <td>
+                <div className="indicator">
+                  <img
+                    src="https://res.cloudinary.com/eshop-project/image/upload/v1732776516/AllProducts_vawxwy.png"
+                    alt="All Products"
+                    className="object-cover w-20 h-20 m-auto"
+                  />
+                  <span className="badge badge-sm badge-secondary indicator-item">
+                    +{ShopCartCount}
+                  </span>
+                </div>
+              </td>
+              <td>
+                <p className="text-base-200 text-2xl">Total :</p>
+              </td>
+              <td className="text-accent text-2xl font-bold">
+                {FormatCurrency(ShopCartTotalPrice)}
+              </td>
+              <td>
+                <button className="read-more m-auto px-10">Payment</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
